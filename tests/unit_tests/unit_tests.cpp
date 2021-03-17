@@ -2,7 +2,7 @@
 
 #include <gtest/gtest.h>
 extern "C" {
-#include "include.h"
+#include "header.h"
 }
 
 TEST(Example, EmptyTest) {
