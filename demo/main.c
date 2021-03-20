@@ -2,8 +2,7 @@
 
 #include <stdio.h>
 
-#include "header.h"
-
+#include "vectors.h"
 
 int main() {
     return 0;

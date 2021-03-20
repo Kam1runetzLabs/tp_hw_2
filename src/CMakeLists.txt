@@ -1,1 +1,1 @@
-add_subdirectory(mylib)
+add_subdirectory(vector_processing)

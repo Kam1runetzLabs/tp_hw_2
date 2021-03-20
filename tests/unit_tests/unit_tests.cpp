@@ -2,7 +2,7 @@
 
 #include <gtest/gtest.h>
 extern "C" {
-#include "header.h"
+#include "vectors.h"
 }
 
 TEST(Example, EmptyTest) { EXPECT_TRUE(true); }
