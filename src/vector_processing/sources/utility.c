@@ -6,6 +6,7 @@
 #include "utility.h"
 
 // todo refactor this
+// todo return read vectors count
 err_code_t fill_vectors(FILE *file, vectors_3d_t *vectors) {
   if (!file) return ERR_UNINITIALIZED_FILE;
   if (!vectors) return ERR_UNINITIALIZED_VECTORS;

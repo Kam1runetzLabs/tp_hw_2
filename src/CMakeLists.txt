@@ -1,1 +1,2 @@
 add_subdirectory(vector_processing)
+add_subdirectory(vectors_calculating_static)

@@ -4,6 +4,7 @@
 #define VECTOR_PROCESSING_INCLUDE_UTILITY_H_
 
 #include <stddef.h>
+#include <stdio.h>
 
 #include "vectors.h"
 
