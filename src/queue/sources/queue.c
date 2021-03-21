@@ -4,10 +4,10 @@
 #include <malloc.h>
 #include <stddef.h>
 
-struct node {
+typedef struct node {
   struct node *next;
   void *value;
-};
+} node_t;
 
 struct queue {
   node_t *head;
