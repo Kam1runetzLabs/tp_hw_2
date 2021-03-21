@@ -5,15 +5,19 @@
 
 #include <stddef.h>
 
-typedef struct {
-  float *x_coords;
-  float *y_coords;
-  float *z_coords;
-  size_t count;
-} vectors_3d_t;
+typedef struct vectors_3d vectors_3d_t;
 
 ///@todo documentation
 vectors_3d_t *init_vectors(size_t count);
+
+int add_vector(vectors_3d_t *vectors, float x, float y, float z);
+
+int get_coords(const vectors_3d_t *vectors, float **x_range, float **y_range,
+               float **z_range);
+
+size_t vectors_count(const vectors_3d_t *vectors);
+
+size_t vectors_capacity(const vectors_3d_t *vectors);
 
 ///@todo documentation
 void free_vectors(vectors_3d_t *vectors);
