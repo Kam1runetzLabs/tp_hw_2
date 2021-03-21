@@ -4,7 +4,7 @@
 
 #include <stddef.h>
 
-static inline float float_range_avg(const float *array, size_t size) {
+static float float_range_avg(const float *array, size_t size) {
   float common = 0.f;
   for (size_t i = 0; i != size; ++i) common += array[i];
   return common / (float)size;
@@ -12,12 +12,18 @@ static inline float float_range_avg(const float *array, size_t size) {
 
 int avg_coords(const vectors_3d_t *vectors, float *x_avg, float *y_avg,
                float *z_avg) {
-  if (!vectors) return -1;
-  if (!vectors->x_coords || !vectors->y_coords || !vectors->z_coords) return -1;
+  float *x_coords;
+  float *y_coords;
+  float *z_coords;
 
-  if (x_avg) *x_avg = float_range_avg(vectors->x_coords, vectors->count);
-  if (y_avg) *y_avg = float_range_avg(vectors->y_coords, vectors->count);
-  if (z_avg) *z_avg = float_range_avg(vectors->z_coords, vectors->count);
+  int error = get_coords(vectors, &x_coords, &y_coords, &z_coords);
+  if (error) return -1;
+
+  size_t count = vectors_count(vectors);
+
+  if (x_avg) *x_avg = float_range_avg(x_coords, count);
+  if (y_avg) *y_avg = float_range_avg(y_coords, count);
+  if (z_avg) *z_avg = float_range_avg(z_coords, count);
 
   return 0;
 }
