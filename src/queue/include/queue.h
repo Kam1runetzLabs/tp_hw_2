@@ -1,9 +1,7 @@
-//
-// Created by w1ckedente on 21.03.2021.
-//
+// Copyright 2021 Kam1runetzLabs <notsoserious2017@gmail.com>
 
-#ifndef TEMPLATE_QUEUE_H
-#define TEMPLATE_QUEUE_H
+#ifndef QUEUE_INCLUDE_QUEUE_H_
+#define QUEUE_INCLUDE_QUEUE_H_
 
 #include <stdbool.h>
 #include <stddef.h>
@@ -20,8 +18,7 @@ queue_t *init_queue();
 int enqueue(queue_t *queue, void *value);
 
 ///@param queue указатель на очередь, не должен быть NULL
-///@return первый элемент очереди или NULL если очередь пуста или не
-///инициализированна
+///@return первый элемент очереди
 void *dequeue(queue_t *queue);
 
 ///@param queue указатель на очередь, не должен быть NULL
@@ -29,10 +26,10 @@ void *dequeue(queue_t *queue);
 size_t size_queue(const queue_t *queue);
 
 ///@param queue указатель на очередь, не должен быть NULL
-///@return true если очередь пуста или неинициализированна, иначе false
+///@return true если очередь пуста, иначе false
 bool empty_queue(const queue_t *queue);
 
 ///@param queue указатель на удаляемую очередь, может быть NULL
 void free_queue(queue_t *queue);
 
-#endif  // TEMPLATE_QUEUE_H
+#endif  // QUEUE_INCLUDE_QUEUE_H_
