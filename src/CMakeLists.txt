@@ -1,2 +1,6 @@
-add_subdirectory(vector_processing)
-add_subdirectory(vectors_calculating_static)
+add_subdirectory(3d_vectors)
+add_subdirectory(sync_vectors_calculating)
+add_subdirectory(queue)
+add_subdirectory(thread_pool)
+add_subdirectory(float_array)
+add_subdirectory(multithreading_vectors_calculating)
