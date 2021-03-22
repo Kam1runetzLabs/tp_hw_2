@@ -1,10 +1,10 @@
 // Copyright 2021 Kam1runetzLabs <notsoserious2017@gmail.com>
 
+#include "queue.h"
+
 #include <assert.h>
 #include <malloc.h>
 #include <stddef.h>
-
-#include "queue.h"
 
 typedef struct node {
   struct node *next;
@@ -57,12 +57,12 @@ void *dequeue(queue_t *queue) {
   return ret_value;
 }
 
-size_t size_queue(const queue_t *queue) {
+size_t queue_size(const queue_t *queue) {
   assert(queue != NULL);
   return queue->size;
 }
 
-bool empty_queue(const queue_t *queue) {
+bool queue_empty(const queue_t *queue) {
   assert(queue != NULL);
   return queue->head == NULL;
 }

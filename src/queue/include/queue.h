@@ -23,11 +23,11 @@ void *dequeue(queue_t *queue);
 
 ///@param queue указатель на очередь, не должен быть NULL
 ///@return размер очереди
-size_t size_queue(const queue_t *queue);
+size_t queue_size(const queue_t *queue);
 
 ///@param queue указатель на очередь, не должен быть NULL
 ///@return true если очередь пуста, иначе false
-bool empty_queue(const queue_t *queue);
+bool queue_empty(const queue_t *queue);
 
 ///@param queue указатель на удаляемую очередь, может быть NULL
 void free_queue(queue_t *queue);
