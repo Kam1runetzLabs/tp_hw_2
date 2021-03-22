@@ -55,7 +55,7 @@ const_iterator float_array_cend(const float_array_t* array) {
   return float_array_end(array);
 }
 
-float get_element(float_array_t* array, size_t index) {
+float get_element(const float_array_t* array, size_t index) {
   assert(array != NULL);
   assert(index < array->size);
   return array->memory[index];
