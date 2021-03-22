@@ -5,21 +5,24 @@
 
 #include <stddef.h>
 
+#include "float_array.h"
+
 typedef struct vectors_3d vectors_3d_t;
 
-///@todo documentation
-vectors_3d_t *init_vectors(size_t count);
+vectors_3d_t *init_vectors(size_t capacity);
 
-int add_vector(vectors_3d_t *vectors, float x, float y, float z);
+void add_vector(vectors_3d_t *vectors, float x, float y, float z);
 
-int get_coords(const vectors_3d_t *vectors, float **x_range, float **y_range,
-               float **z_range);
+void get_coords(const vectors_3d_t *vectors, float_array_t **x_coords,
+                float_array_t **y_coords, float_array_t **z_coords);
+
+void get_vector(const vectors_3d_t *vectors, size_t ind, float *x, float *y,
+                float *z);
 
 size_t vectors_count(const vectors_3d_t *vectors);
 
 size_t vectors_capacity(const vectors_3d_t *vectors);
 
-///@todo documentation
 void free_vectors(vectors_3d_t *vectors);
 
 #endif  // VECTOR_PROCESSING_INCLUDE_VECTORS_H_

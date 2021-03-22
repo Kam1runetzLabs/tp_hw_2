@@ -1,9 +1,7 @@
-//
-// Created by w1ckedente on 22.03.2021.
-//
+// Copyright 2021 Kam1runetzLabs <notsoserious2017@gmail.com>
 
-#ifndef TEMPLATE_FLOAT_ARRAY_H
-#define TEMPLATE_FLOAT_ARRAY_H
+#ifndef FLOAT_ARRAY_INCLUDE_FLOAT_ARRAY_H_
+#define FLOAT_ARRAY_INCLUDE_FLOAT_ARRAY_H_
 
 #include <stddef.h>
 
@@ -25,8 +23,8 @@ const_iterator float_array_cbegin(const float_array_t *array);
 
 const_iterator float_array_cend(const float_array_t *array);
 
-float get_element(const float_array_t *array, size_t index);
+float float_array_get_element(const float_array_t *array, size_t index);
 
-void set_element(float_array_t *array, size_t index, float value);
+void float_array_set_element(float_array_t *array, size_t index, float value);
 
-#endif  // TEMPLATE_FLOAT_ARRAY_H
+#endif  // FLOAT_ARRAY_INCLUDE_FLOAT_ARRAY_H_

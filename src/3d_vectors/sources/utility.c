@@ -2,14 +2,13 @@
 
 #include "utility.h"
 
+#include <assert.h>
 #include <stddef.h>
 #include <stdio.h>
 
-int fill_vectors(FILE *file, vectors_3d_t *vectors, size_t *read_count_ptr) {
-  if (read_count_ptr) *read_count_ptr = 0;
-
-  if (!file) return -1;
-  if (!vectors) return -1;
+size_t fill_vectors(FILE *file, vectors_3d_t *vectors) {
+  assert(file != NULL);
+  assert(vectors != NULL);
 
   float x = 0.f;
   float y = 0.f;
@@ -20,10 +19,8 @@ int fill_vectors(FILE *file, vectors_3d_t *vectors, size_t *read_count_ptr) {
   size_t capacity = vectors_capacity(vectors);
   for (; read_count != capacity && !feof(file); ++read_count) {
     if (fscanf(file, "%f%f%f", &x, &y, &z) != 3) return -1;
-    int error = add_vector(vectors, x, y, z);
-    if (error) return -1;
+    add_vector(vectors, x, y, z);
   }
 
-  if (read_count_ptr) *read_count_ptr = read_count;
-  return 0;
+  return read_count;
 }

@@ -8,8 +8,10 @@
 
 #include "vectors.h"
 
-///@todo documentation
-///@param vectors must be initialized
-int fill_vectors(FILE *file, vectors_3d_t *vectors, size_t *read_count);
+///@brief заполняет векторы координатами из файла
+///@param file указатель на файл с координатами, не должен быть NULL
+///@param vectors указатель на структуру векторов, не должен быть NULL
+///@return количество прочитанных векторов
+size_t fill_vectors(FILE *file, vectors_3d_t *vectors);
 
 #endif  // VECTOR_PROCESSING_INCLUDE_UTILITY_H_

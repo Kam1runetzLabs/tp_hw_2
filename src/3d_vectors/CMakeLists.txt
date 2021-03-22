@@ -8,4 +8,7 @@ add_library(vectors STATIC
 
 target_include_directories(vectors PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/include
+        ${CMAKE_CURRENT_SOURCE_DIR}/.../float_array/include
         )
+
+target_link_libraries(vectors float_array)
