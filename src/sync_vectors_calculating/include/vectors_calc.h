@@ -7,7 +7,7 @@
 
 #include "vectors.h"
 
-int avg_coords(const vectors_3d_t *vectors, float *avg_x, float *avg_y,
-               float *avg_z);
+void avg_coords(const vectors_3d_t *vectors, float *avg_x, float *avg_y,
+                float *avg_z);
 
 #endif  // TEMPLATE_VECTORS_CALC_H
