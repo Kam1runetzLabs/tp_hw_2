@@ -1,10 +1,10 @@
 // Copyright 2021 Kam1runetzLabs <notsoserious2017@gmail.com>
 
-#include "utility.h"
-
 #include <assert.h>
 #include <stddef.h>
 #include <stdio.h>
+
+#include "utility.h"
 
 size_t fill_vectors(FILE *file, vectors_3d_t *vectors) {
   assert(file != NULL);
