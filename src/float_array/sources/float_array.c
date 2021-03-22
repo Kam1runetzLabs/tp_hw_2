@@ -60,3 +60,9 @@ float get_element(const float_array_t* array, size_t index) {
   assert(index < array->size);
   return array->memory[index];
 }
+
+void set_element(float_array_t* array, size_t index, float value) {
+  assert(array != NULL);
+  assert(index < array->size);
+  array->memory[index] = value;
+}
