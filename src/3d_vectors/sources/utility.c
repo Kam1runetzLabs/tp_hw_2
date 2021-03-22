@@ -18,7 +18,7 @@ size_t fill_vectors(FILE *file, vectors_3d_t *vectors) {
 
   size_t capacity = vectors_capacity(vectors);
   for (; read_count != capacity && !feof(file); ++read_count) {
-    if (fscanf(file, "%f%f%f", &x, &y, &z) != 3) return -1;
+    if (fscanf(file, "%f%f%f", &x, &y, &z) != 3) return read_count;
     add_vector(vectors, x, y, z);
   }
 
