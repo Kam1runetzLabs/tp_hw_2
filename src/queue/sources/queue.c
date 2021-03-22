@@ -1,6 +1,7 @@
 
 #include "queue.h"
 
+#include <assert.h>
 #include <malloc.h>
 #include <stddef.h>
 
@@ -24,7 +25,7 @@ queue_t *init_queue() {
 }
 
 int enqueue(queue_t *queue, void *value) {
-  if (!queue) return -1;
+  assert(queue != NULL);
 
   node_t *new_node = (node_t *)malloc(sizeof(node_t));
   if (!new_node) return -1;
@@ -44,8 +45,8 @@ int enqueue(queue_t *queue, void *value) {
 }
 
 void *dequeue(queue_t *queue) {
-  if (!queue) return NULL;
-  if (!queue->head) return NULL;
+  assert(queue != NULL);
+  assert(queue->head != NULL);
 
   void *ret_value = queue->head->value;
   node_t *tmp_head = queue->head;
@@ -56,12 +57,12 @@ void *dequeue(queue_t *queue) {
 }
 
 size_t size_queue(const queue_t *queue) {
-  if (!queue) return 0;
+  assert(queue != NULL);
   return queue->size;
 }
 
 bool empty_queue(const queue_t *queue) {
-  if (!queue) return true;
+  assert(queue != NULL);
   return queue->head == NULL;
 }
 

@@ -25,7 +25,7 @@ int enqueue(queue_t *queue, void *value);
 void *dequeue(queue_t *queue);
 
 ///@param queue указатель на очередь, не должен быть NULL
-///@return размер очереди, 0 в случае пустой или неинициализированной очереди
+///@return размер очереди
 size_t size_queue(const queue_t *queue);
 
 ///@param queue указатель на очередь, не должен быть NULL
