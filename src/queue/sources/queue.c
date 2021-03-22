@@ -26,17 +26,17 @@ queue_t *init_queue() {
 int enqueue(queue_t *queue, void *value) {
   if (!queue) return -1;
 
-  node_t *tmp = (node_t *)malloc(sizeof(node_t));
-  if (!tmp) return -1;
+  node_t *new_node = (node_t *)malloc(sizeof(node_t));
+  if (!new_node) return -1;
 
-  tmp->next = NULL;
-  tmp->value = value;
+  new_node->next = NULL;
+  new_node->value = value;
 
   if (queue->tail) {
-    queue->tail->next = tmp;
-    queue->tail = tmp;
+    queue->tail->next = new_node;
+    queue->tail = new_node;
   } else {
-    queue->head = queue->tail = tmp;
+    queue->head = queue->tail = new_node;
   }
 
   ++queue->size;
@@ -55,14 +55,23 @@ void *dequeue(queue_t *queue) {
   return ret_value;
 }
 
-size_t queue_size(queue_t *queue) { return queue->size; }
+size_t size_queue(const queue_t *queue) {
+  if (!queue) return 0;
+  return queue->size;
+}
+
+bool empty_queue(const queue_t *queue) {
+  if (!queue) return true;
+  return queue->head == NULL;
+}
 
 void free_queue(queue_t *queue) {
   if (!queue) return;
-  if (!queue->head) return;
-  while (queue->head) {
-    node_t *tmp_head = queue->head;
-    queue->head = queue->head->next;
-    free(tmp_head);
+
+  for (node_t *tmp = queue->head; tmp != NULL; tmp = queue->head) {
+    queue->head = tmp->next;
+    free(tmp);
   }
+
+  free(queue);
 }
