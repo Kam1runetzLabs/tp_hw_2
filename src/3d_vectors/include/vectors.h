@@ -1,7 +1,7 @@
 // Copyright 2021 Kam1runetzLabs <notsoserious2017@gmail.com>
 
-#ifndef VECTOR_PROCESSING_INCLUDE_VECTORS_H_
-#define VECTOR_PROCESSING_INCLUDE_VECTORS_H_
+#ifndef _3D_VECTORS_INCLUDE_VECTORS_H_
+#define _3D_VECTORS_INCLUDE_VECTORS_H_
 
 #include <stddef.h>
 
@@ -25,4 +25,4 @@ size_t vectors_capacity(const vectors_3d_t *vectors);
 
 void free_vectors(vectors_3d_t *vectors);
 
-#endif  // VECTOR_PROCESSING_INCLUDE_VECTORS_H_
+#endif  // _3D_VECTORS_INCLUDE_VECTORS_H_
