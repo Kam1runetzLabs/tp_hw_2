@@ -5,9 +5,10 @@
 
 #include <stddef.h>
 
+#include "float_array.h"
 #include "vectors.h"
 
-void avg_coords(const vectors_3d_t *vectors, float *avg_x, float *avg_y,
-                float *avg_z);
+///@return avg vector
+float_array_t *avg_coords(const vectors_t *vectors);
 
 #endif  // SYNC_VECTORS_CALCULATING_INCLUDE_VECTORS_CALC_H_

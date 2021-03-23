@@ -5,7 +5,7 @@ add_library(s_v_calculating STATIC
 
 target_include_directories(s_v_calculating PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/include
-        ${CMAKE_CURRENT_SOURCE_DIR}/../3d_vectors/include
+        ${CMAKE_CURRENT_SOURCE_DIR}/../vectors/include
         ${CMAKE_CURRENT_SOURCE_DIR}/../float_array/include
         )
 

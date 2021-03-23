@@ -13,18 +13,15 @@ static float float_range_avg(const float_array_t *array, size_t size) {
   return common / (float)size;
 }
 
-void avg_coords(const vectors_3d_t *vectors, float *x_avg, float *y_avg,
-                float *z_avg) {
+float_array_t *avg_coords(const vectors_t *vectors) {
   assert(vectors != NULL);
-  float_array_t *x_coords;
-  float_array_t *y_coords;
-  float_array_t *z_coords;
+  float_array_t *avg_vector = init_float_array(vectors_dims(vectors));
+  if (!avg_vector) return NULL;
 
-  get_coords(vectors, &x_coords, &y_coords, &z_coords);
-
-  size_t count = vectors_count(vectors);
-
-  if (x_avg) *x_avg = float_range_avg(x_coords, count);
-  if (y_avg) *y_avg = float_range_avg(y_coords, count);
-  if (z_avg) *z_avg = float_range_avg(z_coords, count);
+  size_t dims = vectors_dims(vectors);
+  for (size_t i = 0; i != dims; ++i) {
+    float buf = float_range_avg(get_coords(vectors, i), vectors_count(vectors));
+    float_array_set_element(avg_vector, i, buf);
+  }
+  return avg_vector;
 }
