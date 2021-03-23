@@ -1,10 +1,10 @@
 // Copyright 2021 Kam1runetzLabs <notsoserious2017@gmail.com>
 
+#include "float_array.h"
+
 #include <assert.h>
 #include <stddef.h>
 #include <stdlib.h>
-
-#include "float_array.h"
 
 struct float_array {
   float* memory;
@@ -54,13 +54,13 @@ const_iterator float_array_cend(const float_array_t* array) {
   return float_array_end(array);
 }
 
-float get_element(const float_array_t* array, size_t index) {
+float float_array_get_element(const float_array_t* array, size_t index) {
   assert(array != NULL);
   assert(index < array->size);
   return array->memory[index];
 }
 
-void set_element(float_array_t* array, size_t index, float value) {
+void float_array_set_element(float_array_t* array, size_t index, float value) {
   assert(array != NULL);
   assert(index < array->size);
   array->memory[index] = value;
