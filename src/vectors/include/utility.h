@@ -12,6 +12,6 @@
 ///@param file указатель на файл с координатами, не должен быть NULL
 ///@param vectors указатель на структуру векторов, не должен быть NULL
 ///@return количество прочитанных векторов
-size_t fill_vectors(FILE *file, vectors_3d_t *vectors);
+size_t fill_vectors(FILE *file, vectors_t *vectors);
 
 #endif  // _3D_VECTORS_INCLUDE_UTILITY_H_
