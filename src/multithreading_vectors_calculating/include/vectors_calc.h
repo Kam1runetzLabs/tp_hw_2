@@ -1,8 +1,9 @@
-//
-// Created by w1ckedente on 23.03.2021.
-//
+#ifndef TEMPLATE_VECTORS_CALC_H
+#define TEMPLATE_VECTORS_CALC_H
 
-#ifndef TEMPLATE_HEADER_H
-#define TEMPLATE_HEADER_H
+#include "float_array.h"
+#include "vectors.h"
 
-#endif  // TEMPLATE_HEADER_H
+float_array_t *calc_avg_vector(const vectors_t *vectors);
+
+#endif  // TEMPLATE_VECTORS_CALC_H

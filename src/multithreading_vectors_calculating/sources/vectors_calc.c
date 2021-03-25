@@ -1,3 +1,62 @@
 //
 // Created by w1ckedente on 23.03.2021.
 //
+
+#include "vectors_calc.h"
+
+#include <assert.h>
+#include <stddef.h>
+#include <stdlib.h>
+
+#include "float_array.h"
+#include "thread_pool.h"
+#include "vectors.h"
+
+typedef struct {
+  float_array_t *coords_range;
+  float *avg_coord_ptr;
+  size_t vectors_count;
+} args_t;
+
+static void *float_range_avg(void *arg) {
+  args_t *args = arg;
+  float common = 0.f;
+  for (size_t i = 0; i != args->vectors_count; ++i)
+    common += float_array_get_element(args->coords_range, i);
+  *args->avg_coord_ptr = common / (float)args->vectors_count;
+  return NULL;
+}
+
+float_array_t *calc_avg_vector(const vectors_t *vectors) {
+  assert(vectors != NULL);
+  thread_pool_t *pool = thread_pool_init(hardware_concurrency());
+  if (!pool) return NULL;
+
+  size_t v_dims = vectors_dims(vectors);
+
+  float_array_t *avg_vector = float_array_init(v_dims);
+  if (!avg_vector) {
+    thread_pool_cancel_and_destroy(pool);
+    return NULL;
+  }
+
+  args_t *args_array = (args_t *)malloc(sizeof(args_t) * v_dims);
+  if (!args_array) {
+    float_array_free(avg_vector);
+    thread_pool_cancel_and_destroy(pool);
+    return NULL;
+  }
+
+  for (size_t i = 0; i != v_dims; ++i) {
+    args_array[i].coords_range = vectors_get_coords(vectors, i);
+    args_array[i].vectors_count = vectors_count(vectors);
+    args_array[i].avg_coord_ptr = float_array_begin(avg_vector) + i;
+  }
+
+  for (size_t i = 0; i != v_dims; ++i) {
+    // todo error handling
+    thread_pool_enqueue_task(pool, float_range_avg, &args_array[i], NULL);
+  }
+  thread_pool_wait_and_destroy(pool);
+  return avg_vector;
+}
