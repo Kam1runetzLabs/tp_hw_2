@@ -12,14 +12,15 @@ typedef struct thread_pool thread_pool_t;
 typedef void *(*task_t)(void *);
 typedef void (*callback_t)(void *);
 
-thread_pool_t *init_thread_pool(size_t min_thr_count, size_t max_thr_count,
-                                size_t ttl);
+long long hardware_concurrency();
 
-int enqueue_task(thread_pool_t *pool, task_t task, void *args,
-                 callback_t callback);
+thread_pool_t *thread_pool_init(size_t workers_count);
 
-void wait_thread_pool(thread_pool_t *pool);
+int thread_pool_enqueue_task(thread_pool_t *pool, task_t task, void *args,
+                             callback_t callback);
 
-void destroy_thread_pool(thread_pool_t *pool);
+void thread_pool_wait_and_destroy(thread_pool_t *pool);
+
+void thread_pool_cancel_and_destroy(thread_pool_t *pool);
 
 #endif  // TEMPLATE_THREAD_POOL_H
