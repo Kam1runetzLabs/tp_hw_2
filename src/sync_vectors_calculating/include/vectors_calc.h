@@ -8,6 +8,6 @@
 #include "float_array.h"
 #include "vectors.h"
 
-float_array_t *avg_vector(const vectors_t *vectors);
+float_array_t *calc_avg_vector(const vectors_t *vectors);
 
 #endif  // SYNC_VECTORS_CALCULATING_INCLUDE_VECTORS_CALC_H_
