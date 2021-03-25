@@ -25,7 +25,7 @@ size_t fill_vectors(FILE *file, vectors_t *vectors) {
       }
       float_array_set_element(vector, i, buf);
     }
-    add_vector(vectors, vector);
+    vectors_add_vector(vectors, vector);
   }
 
   return read_count;

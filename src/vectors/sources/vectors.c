@@ -1,10 +1,11 @@
 // Copyright 2021 Kam1runetzLabs <notsoserious2017@gmail.com>
 
+#include "vectors.h"
+
 #include <assert.h>
 #include <malloc.h>
 #include <stddef.h>
 
-#include "vectors.h"
 #include "float_array.h"
 
 #define HANDLE_BAD_ALLOC(vectors) \
@@ -40,7 +41,8 @@ vectors_t *vectors_init(size_t capacity, size_t dims) {
   return vectors;
 }
 
-void add_vector(vectors_t *vectors, const float_array_t *vectors_coords) {
+void vectors_add_vector(vectors_t *vectors,
+                        const float_array_t *vectors_coords) {
   assert(vectors != NULL);
   assert(vectors->count != vectors_capacity(vectors));
   assert(vectors_coords != NULL);
@@ -54,7 +56,7 @@ void add_vector(vectors_t *vectors, const float_array_t *vectors_coords) {
   vectors->count++;
 }
 
-float_array_t *get_coords(const vectors_t *vectors, size_t dim) {
+float_array_t *vectors_get_coords(const vectors_t *vectors, size_t dim) {
   assert(vectors != NULL);
   assert(dim < vectors->dims);
   return vectors->coords[dim];
@@ -68,6 +70,11 @@ size_t vectors_count(const vectors_t *vectors) {
 size_t vectors_capacity(const vectors_t *vectors) {
   assert(vectors != NULL);
   return float_array_size(vectors->coords[0]);
+}
+
+size_t vectors_dims(const vectors_t *vectors) {
+  assert(vectors != NULL);
+  return vectors->dims;
 }
 
 void vectors_free(vectors_t *vectors) {

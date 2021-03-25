@@ -11,9 +11,10 @@ typedef struct vectors vectors_t;
 
 vectors_t *vectors_init(size_t capacity, size_t dims);
 
-void add_vector(vectors_t *vectors, const float_array_t *vectors_coords);
+void vectors_add_vector(vectors_t *vectors,
+                        const float_array_t *vectors_coords);
 
-float_array_t *get_coords(const vectors_t *vectors, size_t dim);
+float_array_t *vectors_get_coords(const vectors_t *vectors, size_t dim);
 
 size_t vectors_count(const vectors_t *vectors);
 
