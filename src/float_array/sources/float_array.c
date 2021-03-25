@@ -11,7 +11,7 @@ struct float_array {
   size_t size;
 };
 
-float_array_t* init_float_array(size_t size) {
+float_array_t* float_array_init(size_t size) {
   assert(size != 0);
   float_array_t* array = (float_array_t*)malloc(sizeof(float_array_t));
   if (!array) return NULL;
@@ -25,7 +25,7 @@ float_array_t* init_float_array(size_t size) {
   return array;
 }
 
-void free_float_array(float_array_t* array) {
+void float_array_free(float_array_t* array) {
   if (!array) return;
   free(array->memory);
   free(array);

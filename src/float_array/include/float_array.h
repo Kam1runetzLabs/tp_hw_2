@@ -9,9 +9,9 @@ typedef struct float_array float_array_t;
 typedef float *iterator;
 typedef const float *const_iterator;
 
-float_array_t *init_float_array(size_t size);
+float_array_t *float_array_init(size_t size);
 
-void free_float_array(float_array_t *array);
+void float_array_free(float_array_t *array);
 
 size_t float_array_size(const float_array_t *array);
 

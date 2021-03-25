@@ -1,4 +1,4 @@
-add_subdirectory(3d_vectors)
+add_subdirectory(vectors)
 add_subdirectory(sync_vectors_calculating)
 add_subdirectory(queue)
 add_subdirectory(thread_pool)
