@@ -15,7 +15,7 @@ static float float_range_avg(const float_array_t *array, size_t size) {
 
 float_array_t *avg_coords(const vectors_t *vectors) {
   assert(vectors != NULL);
-  float_array_t *avg_vector = init_float_array(vectors_dims(vectors));
+  float_array_t *avg_vector = float_array_init(vectors_dims(vectors));
   if (!avg_vector) return NULL;
 
   size_t dims = vectors_dims(vectors);
