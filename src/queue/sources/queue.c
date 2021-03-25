@@ -17,7 +17,7 @@ struct queue {
   size_t size;
 };
 
-queue_t *init_queue() {
+queue_t *queue_init() {
   queue_t *queue = (queue_t *)malloc(sizeof(queue_t));
   if (!queue) return NULL;
   queue->head = queue->tail = NULL;
@@ -25,7 +25,7 @@ queue_t *init_queue() {
   return queue;
 }
 
-int enqueue(queue_t *queue, void *value) {
+int queue_push(queue_t *queue, void *value) {
   assert(queue != NULL);
 
   node_t *new_node = (node_t *)malloc(sizeof(node_t));
@@ -34,23 +34,22 @@ int enqueue(queue_t *queue, void *value) {
   new_node->next = NULL;
   new_node->value = value;
 
-  if (queue->tail) {
+  if (!queue->head) {
+    queue->head = queue->tail = new_node;
+  } else {
     queue->tail->next = new_node;
     queue->tail = new_node;
-  } else {
-    queue->head = queue->tail = new_node;
   }
 
   ++queue->size;
   return 0;
 }
 
-void *dequeue(queue_t *queue) {
-  assert(queue != NULL);
-  assert(queue->head != NULL);
+void *queue_pop(queue_t *queue) {
+  assert(queue != NULL && queue->head != NULL);
 
-  void *ret_value = queue->head->value;
   node_t *tmp_head = queue->head;
+  void *ret_value = tmp_head->value;
   queue->head = queue->head->next;
   free(tmp_head);
   --queue->size;
@@ -64,10 +63,10 @@ size_t queue_size(const queue_t *queue) {
 
 bool queue_empty(const queue_t *queue) {
   assert(queue != NULL);
-  return queue->head == NULL;
+  return queue->size == 0;
 }
 
-void free_queue(queue_t *queue) {
+void queue_free(queue_t *queue) {
   if (!queue) return;
 
   for (node_t *tmp = queue->head; tmp != NULL; tmp = queue->head) {
