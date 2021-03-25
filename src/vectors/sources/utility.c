@@ -8,11 +8,10 @@
 #include "float_array.h"
 
 size_t fill_vectors(FILE *file, vectors_t *vectors) {
-  assert(file != NULL);
-  assert(vectors != NULL);
+  assert(file != NULL && vectors != NULL);
 
   size_t read_count = 0;
-  float_array_t *vector = init_float_array(vectors_dims(vectors));
+  float_array_t *vector = float_array_init(vectors_dims(vectors));
   if (!vector) return 0;
 
   size_t capacity = vectors_capacity(vectors);
@@ -21,7 +20,7 @@ size_t fill_vectors(FILE *file, vectors_t *vectors) {
     for (size_t i = 0; i != dims; ++i) {
       float buf;
       if (fscanf(file, "%f", &buf) != 1) {
-        free_float_array(vector);
+        float_array_free(vector);
         return read_count;
       }
       float_array_set_element(vector, i, buf);

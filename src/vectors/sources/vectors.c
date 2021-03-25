@@ -9,7 +9,7 @@
 
 #define HANDLE_BAD_ALLOC(vectors) \
   {                               \
-    free_vectors(vectors);        \
+    vectors_free(vectors);        \
     return NULL;                  \
   }
 
@@ -19,7 +19,7 @@ typedef struct vectors {
   size_t count;
 } vectors_t;
 
-vectors_t *init_vectors(size_t capacity, size_t dims) {
+vectors_t *vectors_init(size_t capacity, size_t dims) {
   assert(capacity != 0);
   assert(dims != 0);
 
@@ -33,7 +33,7 @@ vectors_t *init_vectors(size_t capacity, size_t dims) {
   vectors->count = 0;
 
   for (size_t i = 0; i != dims; ++i) {
-    vectors->coords[i] = init_float_array(capacity);
+    vectors->coords[i] = float_array_init(capacity);
     if (!vectors->coords[i]) HANDLE_BAD_ALLOC(vectors);
   }
 
@@ -70,11 +70,11 @@ size_t vectors_capacity(const vectors_t *vectors) {
   return float_array_size(vectors->coords[0]);
 }
 
-void free_vectors(vectors_t *vectors) {
+void vectors_free(vectors_t *vectors) {
   if (!vectors) return;
   if (vectors->coords)
     for (size_t i = 0; i != vectors->dims; ++i)
-      free_float_array(vectors->coords[i]);
+      float_array_free(vectors->coords[i]);
   free(vectors->coords);
   free(vectors);
 }
