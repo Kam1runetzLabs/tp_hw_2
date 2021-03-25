@@ -1,12 +1,9 @@
-//
-// Created by w1ckedente on 21.03.2021.
-//
+// Copyright 2021 Kam1runetzLabs <notsoserious2017@gmail.com>
 
 #include "thread_pool.h"
 
 #include <assert.h>
 #include <pthread.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 
@@ -40,7 +37,6 @@ struct thread_pool {
   pthread_cond_t wait_cv;
   pthread_cond_t cancel_cv;
   queue_t *jobs_queue;
-  pthread_t *workers;
   size_t workers_count;
   thread_pool_flags_t flag;
 };
@@ -50,10 +46,7 @@ static void job_run(job_t *job);
 static void *thread_routine(void *arg);
 static void thread_pool_free(thread_pool_t *pool);
 
-long long hardware_concurrency() {
-  long long numbers_of_cpu = sysconf(_SC_NPROCESSORS_ONLN);
-  return numbers_of_cpu < 0 ? 1 : numbers_of_cpu;
-}
+long hardware_concurrency() { return sysconf(_SC_NPROCESSORS_ONLN); }
 
 thread_pool_t *thread_pool_init(size_t workers_count) {
   assert(workers_count != 0);
@@ -73,17 +66,13 @@ thread_pool_t *thread_pool_init(size_t workers_count) {
     return NULL;
   }
 
-  pool->workers = (pthread_t *)malloc(sizeof(pthread_t) * workers_count);
-  if (!pool->workers) {
-    thread_pool_free(pool);
-    return NULL;
-  }
-
   pthread_attr_setdetachstate(&pool->attr, PTHREAD_CREATE_DETACHED);
 
   pthread_mutex_lock(&pool->mutex);
-  for (size_t i = 0; i != workers_count; ++i)
-    pthread_create(&pool->workers[i], &pool->attr, thread_routine, pool);
+  for (size_t i = 0; i != workers_count; ++i) {
+    pthread_t tid;
+    pthread_create(&tid, &pool->attr, thread_routine, pool);
+  }
   pool->workers_count = workers_count;
   pool->flag = THREAD_POOL_WORK;
   pthread_mutex_unlock(&pool->mutex);
@@ -117,13 +106,14 @@ void thread_pool_wait_and_destroy(thread_pool_t *pool) {
     pthread_cond_wait(&pool->wait_cv, &pool->mutex);
   pthread_mutex_unlock(&pool->mutex);
   thread_pool_free(pool);
-  printf("thread_pool has been destroyed\n");
 }
 
+// todo experiments and fixes
 void thread_pool_cancel_and_destroy(thread_pool_t *pool) {
   assert(pool != NULL);
   pthread_mutex_lock(&pool->mutex);
   pool->flag = THREAD_POOL_CANCEL;
+  pthread_cond_broadcast(&pool->work_cv);
   while (pool->workers_count > 0)
     pthread_cond_wait(&pool->cancel_cv, &pool->mutex);
   pthread_mutex_unlock(&pool->mutex);
@@ -149,6 +139,9 @@ static void job_run(job_t *job) {
 
 static void *thread_routine(void *arg) {
   thread_pool_t *pool = (thread_pool_t *)arg;
+
+  pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, NULL);
+  pthread_setcanceltype(PTHREAD_CANCEL_DEFERRED, NULL);
 
   pthread_mutex_lock(&pool->mutex);
   for (;;) {
@@ -189,7 +182,7 @@ static void thread_pool_free(thread_pool_t *pool) {
     job_t *job = queue_pop(pool->jobs_queue);
     free(job);
   }
+
   queue_free(pool->jobs_queue);
-  free(pool->workers);
   free(pool);
 }
