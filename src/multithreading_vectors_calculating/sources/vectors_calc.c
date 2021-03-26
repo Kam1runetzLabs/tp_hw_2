@@ -1,13 +1,10 @@
-//
-// Created by w1ckedente on 23.03.2021.
-//
-
-#include "vectors_calc.h"
+// Copyright 2021 Kam1runetzLabs <notsoserious2017@gmail.com>
 
 #include <assert.h>
 #include <stddef.h>
 #include <stdlib.h>
 
+#include "vectors_calc.h"
 #include "float_array.h"
 #include "thread_pool.h"
 #include "vectors.h"
