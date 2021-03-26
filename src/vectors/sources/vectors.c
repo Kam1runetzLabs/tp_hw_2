@@ -8,12 +8,6 @@
 
 #include "float_array.h"
 
-#define HANDLE_BAD_ALLOC(vectors) \
-  {                               \
-    vectors_free(vectors);        \
-    return NULL;                  \
-  }
-
 typedef struct vectors {
   float_array_t **coords;
   size_t dims;
@@ -21,21 +15,26 @@ typedef struct vectors {
 } vectors_t;
 
 vectors_t *vectors_init(size_t capacity, size_t dims) {
-  assert(capacity != 0);
-  assert(dims != 0);
+  assert(capacity != 0 && dims != 0);
 
   vectors_t *vectors = (vectors_t *)malloc(sizeof(vectors_t));
-  if (!vectors) HANDLE_BAD_ALLOC(vectors);
+  if (!vectors) return NULL;
 
   vectors->coords = (float_array_t **)calloc(dims, sizeof(float_array_t *));
-  if (!vectors->coords) HANDLE_BAD_ALLOC(vectors);
+  if (!vectors->coords) {
+    vectors_free(vectors);
+    return NULL;
+  }
 
   vectors->dims = dims;
   vectors->count = 0;
 
   for (size_t i = 0; i != dims; ++i) {
     vectors->coords[i] = float_array_init(capacity);
-    if (!vectors->coords[i]) HANDLE_BAD_ALLOC(vectors);
+    if (!vectors->coords[i]) {
+      vectors_free(vectors);
+      return NULL;
+    }
   }
 
   return vectors;
@@ -43,9 +42,8 @@ vectors_t *vectors_init(size_t capacity, size_t dims) {
 
 void vectors_add_vector(vectors_t *vectors,
                         const float_array_t *vectors_coords) {
-  assert(vectors != NULL);
-  assert(vectors->count != vectors_capacity(vectors));
-  assert(vectors_coords != NULL);
+  assert(vectors != NULL && vectors_coords != NULL);
+  assert(vectors->count < vectors_capacity(vectors));
   assert(float_array_size(vectors_coords) == vectors->dims);
 
   for (size_t i = 0; i != vectors->dims; ++i) {
