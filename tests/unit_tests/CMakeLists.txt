@@ -1,3 +1,8 @@
 hunter_add_package(GTest)
 find_package(GTest CONFIG REQUIRED)
 add_subdirectory(float_array_unit_tests)
+add_subdirectory(multithreading_vectors_calculating_unit_tests)
+add_subdirectory(queue_unit_tests)
+add_subdirectory(sync_vectors_calculating_unit_tests)
+add_subdirectory(thread_pool_unit_tests)
+add_subdirectory(vectors_unit_tests)
