@@ -45,14 +45,12 @@ float_array_t *calc_avg_vector(const vectors_t *vectors) {
     return NULL;
   }
 
+  int err;
   for (size_t i = 0; i != v_dims; ++i) {
     args_array[i].coords_range = vectors_get_coords(vectors, i);
     args_array[i].vectors_count = vectors_count(vectors);
     args_array[i].avg_coord_ptr = float_array_begin(avg_vector) + i;
-  }
 
-  int err;
-  for (size_t i = 0; i != v_dims; ++i) {
     err = thread_pool_enqueue_task(pool, float_range_avg, &args_array[i], NULL);
     if (err) {
       thread_pool_cancel_and_destroy(pool);
