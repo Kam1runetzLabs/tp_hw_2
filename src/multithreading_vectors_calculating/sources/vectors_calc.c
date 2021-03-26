@@ -1,10 +1,11 @@
 // Copyright 2021 Kam1runetzLabs <notsoserious2017@gmail.com>
 
+#include "vectors_calc.h"
+
 #include <assert.h>
 #include <stddef.h>
 #include <stdlib.h>
 
-#include "vectors_calc.h"
 #include "float_array.h"
 #include "thread_pool.h"
 #include "vectors.h"
@@ -39,8 +40,8 @@ float_array_t *calc_avg_vector(const vectors_t *vectors) {
 
   args_t *args_array = (args_t *)malloc(sizeof(args_t) * v_dims);
   if (!args_array) {
-    float_array_free(avg_vector);
     thread_pool_cancel_and_destroy(pool);
+    float_array_free(avg_vector);
     return NULL;
   }
 
@@ -50,9 +51,15 @@ float_array_t *calc_avg_vector(const vectors_t *vectors) {
     args_array[i].avg_coord_ptr = float_array_begin(avg_vector) + i;
   }
 
+  int err;
   for (size_t i = 0; i != v_dims; ++i) {
-    // todo error handling
-    thread_pool_enqueue_task(pool, float_range_avg, &args_array[i], NULL);
+    err = thread_pool_enqueue_task(pool, float_range_avg, &args_array[i], NULL);
+    if (err) {
+      thread_pool_cancel_and_destroy(pool);
+      free(args_array);
+      float_array_free(avg_vector);
+      return NULL;
+    }
   }
   thread_pool_wait_and_destroy(pool);
   return avg_vector;
