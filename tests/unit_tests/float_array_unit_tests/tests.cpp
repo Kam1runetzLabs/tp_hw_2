@@ -36,8 +36,8 @@ TEST(FloatArraySizeGetter, GettingArraySize) {
 }
 
 TEST(FloatArraySizeGetter, GettingNullArraySize) {
-  EXPECT_EXIT(float_array_size(nullptr), ::testing::KilledBySignal(SIGABRT),
-              "");
+  float_array_t *array = nullptr;
+  EXPECT_EXIT(float_array_size(array), ::testing::KilledBySignal(SIGABRT), "");
 }
 
 TEST(FloatArrayIterators, BeginIterator) {
@@ -51,8 +51,8 @@ TEST(FloatArrayIterators, BeginIterator) {
 }
 
 TEST(FloatArrayIterators, BeginIteratorFromNullArray) {
-  EXPECT_EXIT(float_array_begin(nullptr), ::testing::KilledBySignal(SIGABRT),
-              "");
+  float_array_t *array = nullptr;
+  EXPECT_EXIT(float_array_begin(array), ::testing::KilledBySignal(SIGABRT), "");
 }
 
 TEST(FloatArrayIterators, EndIterator) {
@@ -66,7 +66,8 @@ TEST(FloatArrayIterators, EndIterator) {
 }
 
 TEST(FloatArrayIterators, EndIteratorFromNullArray) {
-  EXPECT_EXIT(float_array_end(nullptr), ::testing::KilledBySignal(SIGABRT), "");
+  float_array_t *array = nullptr;
+  EXPECT_EXIT(float_array_end(array), ::testing::KilledBySignal(SIGABRT), "");
 }
 
 TEST(FloatArrayIterators, AssignValueByIterator) {
@@ -90,8 +91,9 @@ TEST(FloatArrayConstIterators, CBeginIterator) {
   float_array_free(array);
 }
 
-TEST(FloatArrayIterators, CBeginIterator) {
-  EXPECT_EXIT(float_array_cbegin(nullptr), ::testing::KilledBySignal(SIGABRT),
+TEST(FloatArrayConstIterators, CBeginIteratorFromNullArray) {
+  float_array_t *array = nullptr;
+  EXPECT_EXIT(float_array_cbegin(array), ::testing::KilledBySignal(SIGABRT),
               "");
 }
 
@@ -105,9 +107,9 @@ TEST(FloatArrayConstIterators, CEndIterator) {
   float_array_free(array);
 }
 
-TEST(FloatArrayIterators, CEndIteratorFromNullArray) {
-  EXPECT_EXIT(float_array_cend(nullptr), ::testing::KilledBySignal(SIGABRT),
-              "");
+TEST(FloatArrayConstIterators, CEndIteratorFromNullArray) {
+  float_array_t *array = nullptr;
+  EXPECT_EXIT(float_array_cend(array), ::testing::KilledBySignal(SIGABRT), "");
 }
 
 TEST(FloatArrayGetElement, GettingElement) {
@@ -122,7 +124,8 @@ TEST(FloatArrayGetElement, GettingElement) {
 
 TEST(FloatArrayGetElement, GettingElementFromNullArray) {
   const size_t index = 1;
-  EXPECT_EXIT(float_array_get_element(nullptr, index),
+  float_array_t *array = nullptr;
+  EXPECT_EXIT(float_array_get_element(array, index),
               ::testing::KilledBySignal(SIGABRT), "");
 }
 
@@ -145,7 +148,8 @@ TEST(FloatArraySetElement, SettingElement) {
 TEST(FloatArraySetElement, SettingElementToNullArray) {
   const size_t index = 1;
   const float value = 12.34;
-  EXPECT_EXIT(float_array_set_element(NULL, index, value),
+  float_array_t *array = nullptr;
+  EXPECT_EXIT(float_array_set_element(array, index, value),
               ::testing::KilledBySignal(SIGABRT), "");
 }
 
