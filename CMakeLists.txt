@@ -15,7 +15,7 @@ HunterGate(
         SHA1 "35fa55bc1dfcf9f4d7264f8bb26cd1759ce1ae07"
 )
 
-project(template VERSION 0.1.0)
+project(vectors_processing VERSION 0.1.0)
 
 if (BUILD_COVERAGE)
     string(APPEND CMAKE_CXX_FLAGS " -lgcov --coverage")
