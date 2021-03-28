@@ -1,10 +1,10 @@
 // Copyright 2021 Kam1runetzLabs <notsoserious2017@gmail.com>
 
-#include "float_array.h"
-
 #include <assert.h>
 #include <stddef.h>
 #include <stdlib.h>
+
+#include "float_array.h"
 
 struct float_array {
   float* memory;
