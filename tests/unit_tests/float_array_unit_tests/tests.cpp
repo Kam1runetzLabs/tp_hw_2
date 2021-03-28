@@ -6,7 +6,7 @@ extern "C" {
 #include "float_array.h"
 }
 
-const size_t array_size = 1234;
+const size_t array_size = 123;
 const size_t invalid_array_size = -1;
 
 TEST(FloatArrayInit, ValidInitFloatArray) {

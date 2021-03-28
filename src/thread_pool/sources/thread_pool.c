@@ -107,7 +107,6 @@ void thread_pool_wait_and_destroy(thread_pool_t *pool) {
   thread_pool_free(pool);
 }
 
-// todo experiments and fixes
 void thread_pool_cancel_and_destroy(thread_pool_t *pool) {
   assert(pool != NULL);
   pthread_mutex_lock(&pool->mutex);
