@@ -1,10 +1,9 @@
 // Copyright 2021 Kam1runetzLabs <notsoserious2017@gmail.com>
 
-#include "vectors_calc.h"
-
 #include <assert.h>
 #include <stddef.h>
 
+#include "vectors_calc.h"
 #include "float_array.h"
 
 static float float_range_avg(const float_array_t *array, size_t size) {
