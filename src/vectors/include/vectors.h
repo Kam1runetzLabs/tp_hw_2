@@ -1,7 +1,7 @@
 // Copyright 2021 Kam1runetzLabs <notsoserious2017@gmail.com>
 
-#ifndef _3D_VECTORS_INCLUDE_VECTORS_H_
-#define _3D_VECTORS_INCLUDE_VECTORS_H_
+#ifndef VECTORS_INCLUDE_VECTORS_H_
+#define VECTORS_INCLUDE_VECTORS_H_
 
 #include <stddef.h>
 
@@ -24,4 +24,4 @@ size_t vectors_dims(const vectors_t *vectors);
 
 void vectors_free(vectors_t *vectors);
 
-#endif  // _3D_VECTORS_INCLUDE_VECTORS_H_
+#endif  // VECTORS_INCLUDE_VECTORS_H_
