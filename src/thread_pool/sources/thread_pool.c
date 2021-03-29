@@ -1,11 +1,12 @@
 // Copyright 2021 Kam1runetzLabs <notsoserious2017@gmail.com>
 
+#include "thread_pool.h"
+
 #include <assert.h>
 #include <pthread.h>
 #include <stdlib.h>
 #include <unistd.h>
 
-#include "thread_pool.h"
 #include "queue.h"
 
 #define PTHREAD_SAFE_INIT(pool, statement) \
@@ -34,7 +35,7 @@ struct thread_pool {
   pthread_attr_t attr;
   pthread_cond_t work_cv;
   pthread_cond_t wait_cv;
-  pthread_cond_t cancel_cv;
+  pthread_cond_t end_cv;
   queue_t *jobs_queue;
   size_t workers_count;
   thread_pool_flags_t flag;
@@ -57,7 +58,7 @@ thread_pool_t *thread_pool_init(size_t workers_count) {
   PTHREAD_SAFE_INIT(pool, pthread_attr_init(&pool->attr));
   PTHREAD_SAFE_INIT(pool, pthread_cond_init(&pool->work_cv, NULL));
   PTHREAD_SAFE_INIT(pool, pthread_cond_init(&pool->wait_cv, NULL));
-  PTHREAD_SAFE_INIT(pool, pthread_cond_init(&pool->cancel_cv, NULL));
+  PTHREAD_SAFE_INIT(pool, pthread_cond_init(&pool->end_cv, NULL));
 
   pool->jobs_queue = queue_init();
   if (!pool->jobs_queue) {
@@ -80,7 +81,7 @@ thread_pool_t *thread_pool_init(size_t workers_count) {
 
 int thread_pool_enqueue_task(thread_pool_t *pool, task_t task, void *args,
                              callback_t callback) {
-  assert(pool != NULL && task != NULL);
+  assert(pool != NULL);
 
   job_t *job = job_init(task, args, callback);
   if (!job) return -1;
@@ -103,6 +104,8 @@ void thread_pool_wait_and_destroy(thread_pool_t *pool) {
   pthread_cond_broadcast(&pool->work_cv);
   while (!queue_empty(pool->jobs_queue))
     pthread_cond_wait(&pool->wait_cv, &pool->mutex);
+  while (pool->workers_count != 0)
+    pthread_cond_wait(&pool->end_cv, &pool->mutex);
   pthread_mutex_unlock(&pool->mutex);
   thread_pool_free(pool);
 }
@@ -112,8 +115,8 @@ void thread_pool_cancel_and_destroy(thread_pool_t *pool) {
   pthread_mutex_lock(&pool->mutex);
   pool->flag = THREAD_POOL_CANCEL;
   pthread_cond_broadcast(&pool->work_cv);
-  while (pool->workers_count > 0)
-    pthread_cond_wait(&pool->cancel_cv, &pool->mutex);
+  while (pool->workers_count != 0)
+    pthread_cond_wait(&pool->end_cv, &pool->mutex);
   pthread_mutex_unlock(&pool->mutex);
   thread_pool_free(pool);
 }
@@ -143,7 +146,7 @@ static void *thread_routine(void *arg) {
 
   pthread_mutex_lock(&pool->mutex);
   for (;;) {
-    while (queue_empty(pool->jobs_queue) && pool->flag != THREAD_POOL_CANCEL)
+    while (queue_empty(pool->jobs_queue) && pool->flag == THREAD_POOL_WORK)
       pthread_cond_wait(&pool->work_cv, &pool->mutex);
 
     if (pool->flag == THREAD_POOL_CANCEL) break;
@@ -152,8 +155,10 @@ static void *thread_routine(void *arg) {
       job_t *job = queue_pop(pool->jobs_queue);
       pthread_mutex_unlock(&pool->mutex);
 
-      job_run(job);
-      free(job);
+      if (job) {
+        job_run(job);
+        free(job);
+      }
 
       pthread_mutex_lock(&pool->mutex);
     }
@@ -164,7 +169,7 @@ static void *thread_routine(void *arg) {
     }
   }
 
-  if (--pool->workers_count == 0) pthread_cond_broadcast(&pool->cancel_cv);
+  if (--pool->workers_count == 0) pthread_cond_broadcast(&pool->end_cv);
   pthread_mutex_unlock(&pool->mutex);
   pthread_exit(NULL);
 }
@@ -174,7 +179,7 @@ static void thread_pool_free(thread_pool_t *pool) {
   pthread_attr_destroy(&pool->attr);
   pthread_cond_destroy(&pool->work_cv);
   pthread_cond_destroy(&pool->wait_cv);
-  pthread_cond_destroy(&pool->cancel_cv);
+  pthread_cond_destroy(&pool->end_cv);
 
   while (!queue_empty(pool->jobs_queue)) {
     job_t *job = queue_pop(pool->jobs_queue);
