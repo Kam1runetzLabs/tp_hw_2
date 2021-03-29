@@ -1,11 +1,10 @@
 // Copyright 2021 Kam1runetzLabs <notsoserious2017@gmail.com>
 
-#include "vectors.h"
-
 #include <assert.h>
 #include <malloc.h>
 #include <stddef.h>
 
+#include "vectors.h"
 #include "float_array.h"
 
 typedef struct vectors {
@@ -50,7 +49,6 @@ void vectors_add_vector(vectors_t *vectors,
     float coord = float_array_get_element(vectors_coords, i);
     float_array_set_element(vectors->coords[i], vectors->count, coord);
   }
-
   vectors->count++;
 }
 

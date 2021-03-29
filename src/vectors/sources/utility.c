@@ -16,6 +16,7 @@ size_t fill_vectors(FILE *file, vectors_t *vectors) {
 
   size_t capacity = vectors_capacity(vectors);
   size_t dims = vectors_dims(vectors);
+
   for (; read_count != capacity && !feof(file); ++read_count) {
     for (size_t i = 0; i != dims; ++i) {
       float buf;
@@ -28,5 +29,6 @@ size_t fill_vectors(FILE *file, vectors_t *vectors) {
     vectors_add_vector(vectors, vector);
   }
 
+  float_array_free(vector);
   return read_count;
 }
