@@ -4,6 +4,7 @@
 #define THREAD_POOL_INCLUDE_THREAD_POOL_H_
 
 #include <stddef.h>
+#include <stdint.h>
 
 typedef struct thread_pool thread_pool_t;
 
@@ -12,7 +13,7 @@ typedef void (*callback_t)(void *);
 
 ///@return количество физически поддерживаемых конкурирующих потоков, -1 в
 ///случае ошибки
-long hardware_concurrency();
+int64_t hardware_concurrency();
 
 ///@brief инициализирует пул и запускает рабочие потоки
 ///@param workers_count количество рабочих потоков

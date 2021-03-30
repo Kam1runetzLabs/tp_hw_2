@@ -23,8 +23,8 @@ void *task(void *arg) {
   return nullptr;
 }
 
+const size_t numbers_count = 12;
 TEST(ThreadPoolEnqueueTask, ThreadPoolEnqueueTaskAndWaitTasks) {
-  const size_t numbers_count = 12;
   int numbers[numbers_count];
   for (size_t i = 0; i != numbers_count; ++i) numbers[i] = i;
 

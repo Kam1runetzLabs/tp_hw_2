@@ -1,13 +1,13 @@
 // Copyright 2021 Kam1runetzLabs <notsoserious2017@gmail.com>
 
-#include "thread_pool.h"
-
 #include <assert.h>
 #include <pthread.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <stdint.h>
 
 #include "queue.h"
+#include "thread_pool.h"
 
 #define PTHREAD_SAFE_INIT(pool, statement) \
   {                                        \
@@ -46,7 +46,7 @@ static void job_run(job_t *job);
 static void *thread_routine(void *arg);
 static void thread_pool_free(thread_pool_t *pool);
 
-long hardware_concurrency() { return sysconf(_SC_NPROCESSORS_ONLN); }
+int64_t hardware_concurrency() { return sysconf(_SC_NPROCESSORS_ONLN); }
 
 thread_pool_t *thread_pool_init(size_t workers_count) {
   assert(workers_count != 0);

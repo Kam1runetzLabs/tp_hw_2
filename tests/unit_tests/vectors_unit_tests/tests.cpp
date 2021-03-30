@@ -2,6 +2,7 @@
 
 #include <gtest/gtest.h>
 
+#include <ctime>
 #include <fstream>
 
 extern "C" {
@@ -69,12 +70,13 @@ TEST(VectorsGetCoords, GetCoordsFromInvalidDim) {
 }
 
 TEST(VectorsAddVector, VectorsAddVector) {
+  static unsigned int seed = time(nullptr);
   vectors_t *vectors = vectors_init(capacity, dims);
   float_array_t *new_vector = float_array_init(dims);
 
   for (iterator it = float_array_begin(new_vector);
        it != float_array_end(new_vector); ++it)
-    *it = static_cast<float>(rand());
+    *it = static_cast<float>(rand_r(&seed));
 
   vectors_add_vector(vectors, new_vector);
   float_array_t *coords[dims];
@@ -167,10 +169,11 @@ TEST(VectorsDims, NullVectorsDims) {
 }
 
 static void fill_vectors_file(const std::string &fname) {
+  static unsigned int seed = time(nullptr);
   std::ofstream file_stream{fname};
   for (size_t i = 0; i != capacity; ++i) {
     for (size_t j = 0; j != dims; ++j)
-      file_stream << static_cast<float>(rand()) << " ";
+      file_stream << static_cast<float>(rand_r(&seed)) << " ";
     file_stream << "\n";
   }
   file_stream.close();

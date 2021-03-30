@@ -75,9 +75,11 @@ size_t vectors_dims(const vectors_t *vectors) {
 
 void vectors_free(vectors_t *vectors) {
   if (!vectors) return;
-  if (vectors->coords)
+  if (vectors->coords) {
     for (size_t i = 0; i != vectors->dims; ++i)
       float_array_free(vectors->coords[i]);
+  }
+
   free(vectors->coords);
   free(vectors);
 }

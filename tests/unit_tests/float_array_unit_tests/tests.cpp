@@ -2,6 +2,8 @@
 
 #include <gtest/gtest.h>
 
+#include <ctime>
+
 extern "C" {
 #include "float_array.h"
 }
@@ -42,8 +44,9 @@ TEST(FloatArraySizeGetter, GettingNullArraySize) {
 
 TEST(FloatArrayIterators, BeginIterator) {
   float_array_t *array = float_array_init(array_size);
+  static unsigned int seed = time(nullptr);
   for (size_t i = 0; i != array_size; ++i)
-    float_array_set_element(array, i, static_cast<float>(rand()));
+    float_array_set_element(array, i, static_cast<float>(rand_r(&seed)));
   iterator begin = float_array_begin(array);
   EXPECT_TRUE(begin);
   EXPECT_EQ(*begin, float_array_get_element(array, 0));
@@ -71,9 +74,10 @@ TEST(FloatArrayIterators, EndIteratorFromNullArray) {
 }
 
 TEST(FloatArrayIterators, AssignValueByIterator) {
+  static unsigned int seed = time(nullptr);
   float_array_t *array = float_array_init(array_size);
   iterator begin = float_array_begin(array);
-  const size_t index = rand() % array_size;
+  const size_t index = rand_r(&seed) % array_size;
   EXPECT_FLOAT_EQ(float_array_get_element(array, index), 0.f);
 
   const float value = 12.34;
@@ -82,9 +86,10 @@ TEST(FloatArrayIterators, AssignValueByIterator) {
 }
 
 TEST(FloatArrayConstIterators, CBeginIterator) {
+  static unsigned int seed = time(nullptr);
   float_array_t *array = float_array_init(array_size);
   for (size_t i = 0; i != array_size; ++i)
-    float_array_set_element(array, i, static_cast<float>(rand()));
+    float_array_set_element(array, i, static_cast<float>(rand_r(&seed)));
   const_iterator begin = float_array_cbegin(array);
   EXPECT_TRUE(begin);
   EXPECT_EQ(*begin, float_array_get_element(array, 0));
@@ -113,9 +118,10 @@ TEST(FloatArrayConstIterators, CEndIteratorFromNullArray) {
 }
 
 TEST(FloatArrayGetElement, GettingElement) {
+  static unsigned int seed = time(nullptr);
   float_array_t *array = float_array_init(array_size);
   iterator it = float_array_begin(array);
-  const size_t index = rand() % array_size;
+  const size_t index = rand_r(&seed) % array_size;
   const float value = 12.34;
   *(it + index) = value;
   EXPECT_FLOAT_EQ(float_array_get_element(array, index), value);
@@ -137,8 +143,9 @@ TEST(FloatArrayGetElement, GettingElementFromOverRangeArray) {
 }
 
 TEST(FloatArraySetElement, SettingElement) {
+  static unsigned int seed = time(nullptr);
   float_array_t *array = float_array_init(array_size);
-  const size_t index = rand() % array_size;
+  const size_t index = rand_r(&seed) % array_size;
   const float value = 12.34;
   float_array_set_element(array, index, value);
   EXPECT_FLOAT_EQ(float_array_get_element(array, index), value);
