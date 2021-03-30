@@ -6,7 +6,7 @@ extern "C" {
 #include "queue.h"
 }
 
-const size_t elements_count = 123;
+const size_t kElementsCount = 123;
 
 TEST(QueueInit, QueueInit) {
   queue_t *queue = queue_init();
@@ -43,9 +43,9 @@ TEST(QueuePush, PushToNullQueue) {
 
 TEST(QueuePop, PopFromQueue) {
   queue_t *queue = queue_init();
-  int elements[elements_count];
-  for (size_t i = 0; i != elements_count; ++i) queue_push(queue, &elements[i]);
-  for (size_t i = 0; i != elements_count; ++i) {
+  int elements[kElementsCount];
+  for (size_t i = 0; i != kElementsCount; ++i) queue_push(queue, &elements[i]);
+  for (size_t i = 0; i != kElementsCount; ++i) {
     int *element_ptr = (int *)queue_pop(queue);
     EXPECT_EQ(*element_ptr, elements[i]);
   }
@@ -65,9 +65,9 @@ TEST(QueuePop, PopFromEmptyQueue) {
 
 TEST(QueueSizeGetter, GettingQueueSize) {
   queue_t *queue = queue_init();
-  int elements[elements_count];
-  for (size_t i = 0; i != elements_count; ++i) queue_push(queue, &elements[i]);
-  EXPECT_EQ(elements_count, queue_size(queue));
+  int elements[kElementsCount];
+  for (size_t i = 0; i != kElementsCount; ++i) queue_push(queue, &elements[i]);
+  EXPECT_EQ(kElementsCount, queue_size(queue));
   queue_free(queue);
 }
 

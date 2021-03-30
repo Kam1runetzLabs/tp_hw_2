@@ -23,16 +23,16 @@ void *task(void *arg) {
   return nullptr;
 }
 
-const size_t numbers_count = 12;
+const size_t kNumbersCount = 12;
 TEST(ThreadPoolEnqueueTask, ThreadPoolEnqueueTaskAndWaitTasks) {
-  int numbers[numbers_count];
-  for (size_t i = 0; i != numbers_count; ++i) numbers[i] = i;
+  int numbers[kNumbersCount];
+  for (size_t i = 0; i != kNumbersCount; ++i) numbers[i] = i;
 
   thread_pool_t *pool = thread_pool_init(hardware_concurrency());
-  for (size_t i = 0; i != numbers_count; ++i)
+  for (size_t i = 0; i != kNumbersCount; ++i)
     thread_pool_enqueue_task(pool, task, &(numbers[i]), nullptr);
   thread_pool_wait_and_destroy(pool);
-  for (size_t i = 0; i != numbers_count; ++i) EXPECT_EQ(numbers[i], i * i);
+  for (size_t i = 0; i != kNumbersCount; ++i) EXPECT_EQ(numbers[i], i * i);
 }
 
 TEST(ThreadPoolEnqueueTask, ThreadPoolEnqueueToNullPool) {
