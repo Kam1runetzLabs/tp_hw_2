@@ -31,23 +31,19 @@ jobs:
       - name: "static analyze"
         run: scripts/static_analyze.sh
 
-      - name: "save static analyze report"
-        uses: actions/upload-artifact@v2
-        with:
-          name: static-analyzer-report
-          path: static-analyze-report/
-
-      - name: "linter processing"
+      - name: "linter"
         run: scripts/linters.sh
 
       - name: "unit tests"
         run: scripts/tests.sh
+        uses: codecov/codecov-action@v1.3.1
+        with:
+          name: codecov
+          verbose: true
+          fail_ci_if_error: true
 
       - name: "memory checking"
         run: scripts/checks.sh
-
-      - name: "coverage processing"
-        run: scripts/coverage.sh
 
       - name: "save coverage report"
         uses: actions/upload-artifact@v2
