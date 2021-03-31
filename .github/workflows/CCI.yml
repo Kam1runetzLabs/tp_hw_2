@@ -45,9 +45,6 @@ jobs:
           files: ./coverage.xml
           fail_ci_if_error: true
 
-      - name: "codecov upload"
-          run: bash <(curl -s https://codecov.io/bash)
-
       - name: "memory checking"
         run: scripts/checks.sh
 
