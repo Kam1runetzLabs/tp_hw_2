@@ -8,9 +8,9 @@ def write_vectors(vectors: list, f_name: str) -> None:
             file.write(vector)
 
 
-def generate_vector(dims: int) -> str:
+def generate_vector_coords(count: int) -> str:
     vector = str()
-    for _ in range(dims):
+    for _ in range(count):
         vector += str(random.uniform(0, 1234))
         vector += " "
     vector += "\n"
@@ -23,8 +23,8 @@ def main():
     vectors_dims = int(os.environ['VECTORS_DIMS'])
 
     vectors = list()
-    for _ in range(vectors_count):
-        vectors.append(generate_vector(vectors_dims))
+    for _ in range(vectors_dims):
+        vectors.append(generate_vector_coords(vectors_count))
 
     write_vectors(vectors, f_name)
 

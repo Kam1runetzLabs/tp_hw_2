@@ -4,7 +4,6 @@
 #include <stdlib.h>
 
 #include "float_array.h"
-#include "utility.h"
 #include "vectors.h"
 #include "vectors_calc.h"
 
@@ -36,11 +35,14 @@ int main(int argc, char *argv[]) {
     exit(EXIT_FAILURE);
   }
 
-  size_t read_count = fill_vectors(v_file, vectors);
+  int error = vectors_fill(v_file, vectors);
+  if (error) {
+    fclose(v_file);
+    fprintf(stderr, "invalid vectors file\n");
+    vectors_free(vectors);
+    exit(EXIT_FAILURE);
+  }
   fclose(v_file);
-
-  if (read_count != vectors_capacity(vectors))
-    fprintf(stderr, "warning: read count and vectors capacity mismatch");
 
   float_array_t *avg_vector = calc_avg_vector(vectors);
   if (!avg_vector) {
