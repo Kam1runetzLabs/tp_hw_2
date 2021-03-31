@@ -1,4 +1,5 @@
 [![CCI](https://github.com/Kam1runetzLabs/tp_hw_2/actions/workflows/CCI.yml/badge.svg)](https://github.com/Kam1runetzLabs/tp_hw_2/actions/workflows/CCI.yml) [![codecov](https://codecov.io/gh/Kam1runetzLabs/tp_hw_2/branch/development/graph/badge.svg)](https://codecov.io/gh/Kam1runetzLabs/tp_hw_2)
+[![docs](https://img.shields.io/badge/docs-GithubPages-informational)](https://kam1runetzlabs.github.io/tp_hw_2/)
 
 Студент: Шумеев Илья
 
