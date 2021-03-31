@@ -1,0 +1,12 @@
+option(MTHREADING_CALC "Multithreading calculating" ON)
+
+if (MTHREADING_CALC)
+    string(APPEND CMAKE_C_FLAGS " -rdynamic -ldl")
+    add_executable(demo par_main.c)
+    target_include_directories(demo PUBLIC src/vectors/include src/float_array/include)
+    target_link_libraries(demo vectors float_array)
+else ()
+    add_executable(demo sync_main.c)
+    target_include_directories(demo PUBLIC src/vectors/include src/float_array/include src/sync_vectors_calculating/include)
+    target_link_libraries(demo s_v_calculating vectors float_array)
+endif ()
