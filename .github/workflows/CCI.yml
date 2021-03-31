@@ -51,3 +51,9 @@ jobs:
 
       - name: "stress tests"
         run: scripts/stress_tests.sh
+
+      - name: "documentation"
+        uses: mattnotmitt/doxygen-action@v1
+        with:
+          working-directory: '.'
+          doxyfile-path: 'docs/Doxygen'
