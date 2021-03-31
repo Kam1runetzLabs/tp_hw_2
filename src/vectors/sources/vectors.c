@@ -1,11 +1,14 @@
 // Copyright 2021 Kam1runetzLabs <notsoserious2017@gmail.com>
 
+#include "vectors.h"
+
 #include <assert.h>
 #include <malloc.h>
 #include <stddef.h>
+#include <stdio.h>
 
-#include "vectors.h"
 #include "float_array.h"
+#include "vectors.h"
 
 typedef struct vectors {
   float_array_t **coords;
@@ -37,6 +40,26 @@ vectors_t *vectors_init(size_t capacity, size_t dims) {
   }
 
   return vectors;
+}
+
+int vectors_fill(FILE *file, vectors_t *vectors) {
+  assert(file != NULL && vectors != NULL);
+  size_t dims = vectors_dims(vectors);
+
+  for (size_t i = 0; i != dims; ++i) {
+    iterator begin = float_array_begin(vectors->coords[i]);
+    iterator end = float_array_end(vectors->coords[i]);
+    for (iterator it = begin; it != end; ++it) {
+      float buf;
+      if (fscanf(file, "%f", &buf) != 1) {
+        vectors->count = 0;
+        return -1;
+      }
+      *it = buf;
+      vectors->count++;
+    }
+  }
+  return 0;
 }
 
 void vectors_add_vector(vectors_t *vectors,

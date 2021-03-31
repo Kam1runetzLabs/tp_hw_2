@@ -4,6 +4,7 @@
 #define VECTORS_INCLUDE_VECTORS_H_
 
 #include <stddef.h>
+#include <stdio.h>
 
 #include "float_array.h"
 
@@ -15,6 +16,13 @@ typedef struct vectors vectors_t;
 ///@param dims размерность вектора, не может быть 0
 ///@return указатель на хранилище векторов или NULL в случае ошибки
 vectors_t *vectors_init(size_t capacity, size_t dims);
+
+///@brief заполняет векторы координатами из файла, если какие-то координаты
+///остались не заполнены, то они считаются нулевыми
+///@param file указатель на файл с координатами, не должен быть NULL
+///@param vectors указатель на структуру векторов, не должен быть NULL
+///@return 0 при успешном выполнении, -1 при ошибке
+int vectors_fill(FILE *file, vectors_t *vectors);
 
 ///@brief добавляет вектор в хранилище векторов, если количество векторов не
 ///превышает вместимость хранилища
