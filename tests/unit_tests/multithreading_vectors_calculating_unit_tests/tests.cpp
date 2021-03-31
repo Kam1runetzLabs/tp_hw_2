@@ -1,12 +1,17 @@
 // Copyright 2021 Kam1runetzLabs <notsoserious2017@gmail.com>
 
+#include <dlfcn.h>
 #include <gtest/gtest.h>
 
 extern "C" {
 #include "float_array.h"
 #include "vectors.h"
-#include "vectors_calc.h"
 }
+
+const char lib_path[] =
+    "../../../src/multithreading_vectors_calculating/"
+    "libm_v_calculating.so";
+typedef float_array_t *(*calc_avg_vector_t)(const vectors_t *);
 
 const size_t dims = 3;
 const size_t capacity = 123;
@@ -20,6 +25,16 @@ static float calc_avg_range(const float_array_t *range) {
 }
 
 TEST(CalcAvgVectors, CalcAvgVectors) {
+  void *handle;
+  calc_avg_vector_t calc_avg_vector;
+  handle = dlopen(lib_path, RTLD_LAZY);
+  if (!handle) FAIL() << "Unable to open so lib";
+  *(void **)(&calc_avg_vector) = dlsym(handle, "calc_avg_vector");
+  if (!calc_avg_vector) {
+    dlclose(handle);
+    FAIL() << "Unable to load sym";
+  }
+
   vectors_t *vectors = vectors_init(capacity, dims);
   for (size_t i = 0; i != capacity; ++i) {
     float_array_t *new_vector = float_array_init(dims);
@@ -37,9 +52,5 @@ TEST(CalcAvgVectors, CalcAvgVectors) {
   }
   float_array_free(avg_vector);
   vectors_free(vectors);
-}
-
-TEST(CalcAvgVectors, CalcFromNullVectors) {
-  vectors_t *vectors = nullptr;
-  EXPECT_EXIT(calc_avg_vector(vectors), ::testing::KilledBySignal(SIGABRT), "");
+  dlclose(handle);
 }

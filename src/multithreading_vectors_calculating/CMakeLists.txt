@@ -1,4 +1,4 @@
-add_library(m_v_calculating SHARED
+add_library(m_v_calculating MODULE
         ${CMAKE_CURRENT_SOURCE_DIR}/include/vectors_calc.h
         ${CMAKE_CURRENT_SOURCE_DIR}/sources/vectors_calc.c
         )
