@@ -1,3 +1,6 @@
 ignore:
   - "tests/**/*"
   - "_builds/**/*"
+  - "tools/**/*"
+  - ".github/**/*"
+  - "scripts/**/*"
