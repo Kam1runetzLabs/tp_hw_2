@@ -9,4 +9,4 @@ CMAKE_OPTS="$CMAKE_CONFIG_OPTS $CMAKE_TOOLCHAIN_OPTS -DBUILD_COVERAGE"
 cmake -H. -B_builds "$CMAKE_OPTS"
 cmake --build _builds
 cmake --build _builds --target test -- ARGS="--verbose"
-gcov . -r
+gcovr . -r --xml coverage.xml
