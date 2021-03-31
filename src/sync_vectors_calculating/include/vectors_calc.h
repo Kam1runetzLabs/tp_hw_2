@@ -3,11 +3,13 @@
 #ifndef SYNC_VECTORS_CALCULATING_INCLUDE_VECTORS_CALC_H_
 #define SYNC_VECTORS_CALCULATING_INCLUDE_VECTORS_CALC_H_
 
-#include <stddef.h>
-
 #include "float_array.h"
 #include "vectors.h"
 
+///@brief из структуры n-мерных векторов считает в одном потоке n-мерный
+///вектор со средними координатами
+///@param vectors указатель на структуру векторов, не может быть NULL
+///@return указатель на вектор со средними координатами
 float_array_t *calc_avg_vector(const vectors_t *vectors);
 
 #endif  // SYNC_VECTORS_CALCULATING_INCLUDE_VECTORS_CALC_H_
