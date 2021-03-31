@@ -6,7 +6,6 @@
 #include <fstream>
 
 extern "C" {
-#include "utility.h"
 #include "vectors.h"
 }
 
@@ -171,8 +170,8 @@ TEST(VectorsDims, NullVectorsDims) {
 static void fill_vectors_file(const std::string &fname) {
   static unsigned int seed = time(nullptr);
   std::ofstream file_stream{fname};
-  for (size_t i = 0; i != capacity; ++i) {
-    for (size_t j = 0; j != dims; ++j)
+  for (size_t i = 0; i != dims; ++i) {
+    for (size_t j = 0; j != capacity; ++j)
       file_stream << static_cast<float>(rand_r(&seed)) << " ";
     file_stream << "\n";
   }
@@ -186,18 +185,17 @@ TEST(FillVectors, FillVectors) {
   fill_vectors_file(fname);
   vectors_t *vectors = vectors_init(capacity, dims);
   FILE *file = fopen(fname.c_str(), "r");
-  size_t read_count = fill_vectors(file, vectors);
+  int error = vectors_fill(file, vectors);
   fclose(file);
   remove_file(fname);
-  EXPECT_EQ(read_count, vectors_count(vectors));
-  EXPECT_EQ(read_count, vectors_capacity(vectors));
+  EXPECT_FALSE(error);
   vectors_free(vectors);
 }
 
 TEST(FillVectors, FillVectorsFromNullFile) {
   FILE *file = nullptr;
   vectors_t *vectors = vectors_init(capacity, dims);
-  EXPECT_EXIT(fill_vectors(file, vectors), ::testing::KilledBySignal(SIGABRT),
+  EXPECT_EXIT(vectors_fill(file, vectors), ::testing::KilledBySignal(SIGABRT),
               "");
   vectors_free(vectors);
 }
@@ -207,8 +205,34 @@ TEST(FillVectors, FillNullVectors) {
   fill_vectors_file(fname);
   vectors_t *vectors = nullptr;
   FILE *file = fopen(fname.c_str(), "r");
-  EXPECT_EXIT(fill_vectors(file, vectors), ::testing::KilledBySignal(SIGABRT),
+  EXPECT_EXIT(vectors_fill(file, vectors), ::testing::KilledBySignal(SIGABRT),
               "");
   fclose(file);
+  remove_file(fname);
+}
+
+static void fill_invalid_vectors_file(const std::string &fname) {
+  static unsigned int seed = time(nullptr);
+  std::ofstream file_stream{fname};
+  for (size_t i = 0; i != dims; ++i) {
+    for (size_t j = 0; j != capacity; ++j)
+      if (j % 2 == 0)
+        file_stream << static_cast<float>(rand_r(&seed)) << " ";
+      else
+        file_stream << static_cast<char>(rand_r(&seed)) << " ";
+    file_stream << "\n";
+  }
+  file_stream.close();
+}
+
+TEST(FillVectors, FillFromInvalidFile) {
+  const std::string fname("invalid_vectors.txt");
+  fill_invalid_vectors_file(fname);
+  vectors_t *vectors = vectors_init(capacity, dims);
+  FILE *file = fopen(fname.c_str(), "r");
+  int error = vectors_fill(file, vectors);
+  fclose(file);
+  EXPECT_TRUE(error);
+  EXPECT_EQ(vectors_count(vectors), 0);
   remove_file(fname);
 }
