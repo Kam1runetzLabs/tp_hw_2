@@ -40,11 +40,11 @@ jobs:
       - name: "linter processing"
         run: scripts/linters.sh
 
-      - name: "memory checking"
-        run: scripts/checks.sh
-
       - name: "unit tests"
         run: scripts/tests.sh
+
+      - name: "memory checking"
+        run: scripts/checks.sh
 
       - name: "coverage processing"
         run: scripts/coverage.sh
@@ -54,3 +54,6 @@ jobs:
         with:
           name: coverage-report
           path: coverage-report/
+
+      - name: "stress tests"
+        run: scripts/stress_tests.sh
