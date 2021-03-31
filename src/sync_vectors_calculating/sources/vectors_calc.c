@@ -8,8 +8,11 @@
 
 static float float_range_avg(const float_array_t *array, size_t size) {
   float common = 0.f;
-  for (size_t i = 0; i != size; ++i)
-    common += float_array_get_element(array, i);
+  const_iterator begin = float_array_cbegin(array);
+  const_iterator end = float_array_cend(array);
+
+  for (const_iterator it = begin; it != end; ++it)
+    common += *it;
   return common / (float)size;
 }
 
