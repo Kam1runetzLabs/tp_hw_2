@@ -6,7 +6,7 @@ CMAKE_TOOLCHAIN_OPTS="-DCMAKE_TOOLCHAIN_FILE='$(pwd)/tools/polly/gcc-pic.cmake'"
 CMAKE_OPTS="$CMAKE_CONFIG_OPTS $CMAKE_TOOLCHAIN_OPTS"
 
 export VECTORS_PATH="vectors.txt"
-export VECTORS_COUNT=33
+export VECTORS_COUNT=33000000
 export VECTORS_DIMS=3
 
 echo "Generating vectors file..."
