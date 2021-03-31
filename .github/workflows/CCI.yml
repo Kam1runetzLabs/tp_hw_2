@@ -48,11 +48,5 @@ jobs:
       - name: "memory checking"
         run: scripts/checks.sh
 
-      - name: "save coverage report"
-        uses: actions/upload-artifact@v2
-        with:
-          name: coverage-report
-          path: coverage-report/
-
       - name: "stress tests"
         run: scripts/stress_tests.sh
