@@ -56,7 +56,7 @@ jobs:
         uses: mattnotmitt/doxygen-action@v1
         with:
           working-directory: "."
-          doxyfile-path: "./docs/Doxygen"
+          doxyfile-path: "./docs/Doxyfile"
 
       - name: "publish documentation"
         uses: peaceiris/actions-gh-pages@v3
