@@ -2,6 +2,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/time.h>
 
 #include "float_array.h"
 #include "vectors.h"
@@ -44,12 +45,18 @@ int main(int argc, char *argv[]) {
   }
   fclose(v_file);
 
+  struct timeval start, end;
+  gettimeofday(&start, NULL);
   float_array_t *avg_vector = calc_avg_vector(vectors);
+  gettimeofday(&end, NULL);
   if (!avg_vector) {
     fprintf(stderr, "internal allocation error\n");
     vectors_free(vectors);
     exit(EXIT_FAILURE);
   }
+  size_t seconds = end.tv_sec - start.tv_sec;
+  size_t microsec = seconds * 1000000 + end.tv_usec - start.tv_usec;
+  printf("time: %lu s (%lu microsec) | ", seconds, microsec);
   printf("avg_vector: ");
   const_iterator avg_vector_begin = float_array_cbegin(avg_vector);
   const_iterator avg_vector_end = float_array_cend(avg_vector);
