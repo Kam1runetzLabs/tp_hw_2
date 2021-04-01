@@ -10,7 +10,8 @@ extern "C" {
 
 const char lib_path[] =
     "../../../src/multithreading_vectors_calculating/"
-    "libm_v_calculating.so";
+    "libm_v_calculatingd.so";
+
 typedef float_array_t *(*calc_avg_vector_t)(const vectors_t *);
 
 const size_t dims = 3;
