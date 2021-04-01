@@ -9,8 +9,6 @@
 #include "thread_pool.h"
 #include "vectors.h"
 
-///@struct "упакованная задача", нужна чтобы передавать в аргумент функции,
-///которая будет крутиться в потоке
 typedef struct {
   float_array_t *coords_range;
   float *avg_coord_ptr;
