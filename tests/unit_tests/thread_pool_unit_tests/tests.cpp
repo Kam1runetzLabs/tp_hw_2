@@ -96,6 +96,26 @@ TEST(ThreadPoolCancelAndDestroy, CancelAndDestroyNullPool) {
               ::testing::KilledBySignal(SIGABRT), "");
 }
 
+// проверим как пул заработает после паузы
+TEST(ThreadPoolAwaitingWork, EnqueuePauseEnqueue) {
+  size_t hw_concurrency = hardware_concurrency();
+  const size_t numbers_count = 2 * hw_concurrency;
+  int *numbers = (int *)malloc(sizeof(int) * numbers_count);
+  if (!numbers) FAIL() << "Internal allocation error";
+  for (size_t i = 0; i != numbers_count; ++i) numbers[i] = static_cast<int>(i);
+
+  thread_pool_t *pool = thread_pool_init(hw_concurrency);
+  for (size_t i = 0; i != hw_concurrency; ++i)
+    thread_pool_enqueue_task(pool, task, &numbers[i], nullptr);
+  sleep(1);  // чтобы быть уверенным в том что он потоки успеют отработать и
+             // будут свободны
+  for (size_t i = hw_concurrency; i != 2 * hw_concurrency; ++i)
+    thread_pool_enqueue_task(pool, task, &numbers[i], nullptr);
+
+  thread_pool_wait_and_destroy(pool);
+  for (size_t i = 0; i != 2 * hw_concurrency; ++i) EXPECT_EQ(numbers[i], i * i);
+}
+
 int main(int argc, char *argv[]) {
   testing::InitGoogleTest(&argc, argv);
   testing::FLAGS_gtest_death_test_style = "threadsafe";
