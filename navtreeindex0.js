@@ -78,7 +78,6 @@ var NAVTREEINDEX0 =
 "queue_8h.html#ac8395c96973c80c935435f6b31479397":[1,0,0,2,0,0,2],
 "queue_8h.html#af9cc8ddb60b6a3bbf9f3fc86b35b3c3f":[1,0,0,2,0,0,6],
 "queue_8h_source.html":[1,0,0,2,0,0],
-"struct_xD1_x83_xD0_xBF_xD0_xB0_xD0_xBA_xD0_xBE_xD0_xB2_xD0_xB0_xD0_xBD_xD0_xBD_xD0_xB0_xD1_x8F.html":[0,0,7],
 "structargs__t.html":[0,0,0],
 "structargs__t.html#a0140c205647f4d093b1b5b764903bff3":[0,0,0,2],
 "structargs__t.html#aaaa3160e418115bcf6a7b6e58e72a54c":[0,0,0,1],
