@@ -18,12 +18,14 @@
     }                                      \
   }
 
+///@enum флаги, посредством которых будет производиться управление пулом
 typedef enum {
   THREAD_POOL_WORK,
   THREAD_POOL_WAIT,
   THREAD_POOL_CANCEL
 } thread_pool_flags_t;
 
+///@struct "упакованная задача", нужна для передачи в функцию thread_routine
 typedef struct {
   task_t task;
   void *task_args;
