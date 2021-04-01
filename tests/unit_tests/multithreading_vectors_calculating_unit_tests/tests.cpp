@@ -10,7 +10,11 @@ extern "C" {
 
 const char lib_path[] =
     "../../../src/multithreading_vectors_calculating/"
-    "libm_v_calculatingd.so";
+    "libm_v_calculating.so";
+// костыль, чтобы можно было без особых трудностей запускать тест из разных
+// скриптов
+const char alt_lib_path[] =
+    "./_builds/src/multithreading_vectors_calculating/libm_v_calculatingd.so";
 
 typedef float_array_t *(*calc_avg_vector_t)(const vectors_t *);
 
@@ -29,7 +33,10 @@ TEST(CalcAvgVectors, CalcAvgVectors) {
   void *handle;
   calc_avg_vector_t calc_avg_vector;
   handle = dlopen(lib_path, RTLD_LAZY);
-  if (!handle) FAIL() << "Unable to open so lib";
+  if (!handle) {
+    handle = dlopen(alt_lib_path, RTLD_LAZY);
+    if (!handle) FAIL() << "Unable to open so lib";
+  }
   *(void **)(&calc_avg_vector) = dlsym(handle, "calc_avg_vector");
   if (!calc_avg_vector) {
     dlclose(handle);
@@ -51,7 +58,7 @@ TEST(CalcAvgVectors, CalcAvgVectors) {
     EXPECT_FLOAT_EQ(calc_avg_range(coords_range),
                     float_array_get_element(avg_vector, i));
   }
+  dlclose(handle);
   float_array_free(avg_vector);
   vectors_free(vectors);
-  dlclose(handle);
 }
