@@ -21,6 +21,7 @@ cmake --build _builds/sync --target demo
 
 echo "WITH MULTITHREADING"
 time ./_builds/mthreading/demo/demo $VECTORS_COUNT $VECTORS_DIMS $VECTORS_PATH
+sleep 1
 echo ""
 echo "WITHOUT MULTITHREADING"
 time ./_builds/sync/demo/demo $VECTORS_COUNT $VECTORS_DIMS $VECTORS_PATH
