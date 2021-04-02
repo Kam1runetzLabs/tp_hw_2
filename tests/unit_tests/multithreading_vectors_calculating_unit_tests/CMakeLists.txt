@@ -1,0 +1,5 @@
+string(APPEND CMAKE_CXX_FLAGS " -Wl,--no-as-needed -rdynamic -ldl")
+add_executable(m_v_calculating_unit_tests tests.cpp)
+target_include_directories(m_v_calculating_unit_tests PUBLIC src/float_array/include src/vectors/include)
+target_link_libraries(m_v_calculating_unit_tests GTest::gtest_main float_array vectors)
+add_test(NAME m_v_calculating_unit_tests COMMAND m_v_calculating_unit_tests)

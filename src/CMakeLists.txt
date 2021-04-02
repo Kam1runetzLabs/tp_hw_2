@@ -1,0 +1,6 @@
+add_subdirectory(vectors)
+add_subdirectory(sync_vectors_calculating)
+add_subdirectory(queue)
+add_subdirectory(thread_pool)
+add_subdirectory(float_array)
+add_subdirectory(multithreading_vectors_calculating)
