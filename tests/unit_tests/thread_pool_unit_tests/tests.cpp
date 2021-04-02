@@ -14,7 +14,8 @@ TEST(ThreadPoolInit, ThreadPoolInit) {
 }
 
 TEST(ThreadPoolInit, ThreadPoolInitWithNullThreadsCount) {
-  EXPECT_EXIT(thread_pool_init(0), ::testing::KilledBySignal(SIGABRT), "");
+  thread_pool_t *pool = thread_pool_init(0);
+  EXPECT_FALSE(pool);
 }
 
 void *task(void *arg) {
@@ -54,8 +55,8 @@ TEST(ThreadPoolEnqueueTask, ThreadPoolEnqueueTaskWithCallback) {
 
 TEST(ThreadPoolEnqueueTask, ThreadPoolEnqueueToNullPool) {
   thread_pool_t *pool = nullptr;
-  EXPECT_EXIT(thread_pool_enqueue_task(pool, task, nullptr, nullptr),
-              ::testing::KilledBySignal(SIGABRT), "");
+  int error = thread_pool_enqueue_task(pool, task, nullptr, nullptr);
+  EXPECT_TRUE(error);
 }
 
 void *long_task(void *arg) {
@@ -76,7 +77,8 @@ TEST(ThreadPoolCancelAndDestroy, ThreadPoolCancelAndDestroy) {
   for (size_t i = 0; i != numbers_count; ++i)
     thread_pool_enqueue_task(pool, long_task, &numbers[i], nullptr);
   sleep(1);  // чтобы быть уверенными, что каждый поток успеет взять себе работу
-  thread_pool_cancel_and_destroy(pool);
+  int error = thread_pool_cancel_and_destroy(pool);
+  EXPECT_FALSE(error);
 
   for (size_t i = 0; i != hw_concurrency; ++i) EXPECT_EQ(numbers[i], i * 2);
   for (size_t i = hw_concurrency; i != 2 * hw_concurrency; ++i)
@@ -86,14 +88,14 @@ TEST(ThreadPoolCancelAndDestroy, ThreadPoolCancelAndDestroy) {
 
 TEST(ThreadPoolWaitAndDestroy, WaitAndDestroyNullPool) {
   thread_pool_t *pool = nullptr;
-  EXPECT_EXIT(thread_pool_wait_and_destroy(pool),
-              ::testing::KilledBySignal(SIGABRT), "");
+  int error = thread_pool_wait_and_destroy(pool);
+  EXPECT_TRUE(error);
 }
 
 TEST(ThreadPoolCancelAndDestroy, CancelAndDestroyNullPool) {
   thread_pool_t *pool = nullptr;
-  EXPECT_EXIT(thread_pool_cancel_and_destroy(pool),
-              ::testing::KilledBySignal(SIGABRT), "");
+  int error = thread_pool_cancel_and_destroy(pool);
+  EXPECT_TRUE(error);
 }
 
 // проверим как пул заработает после паузы
@@ -112,7 +114,8 @@ TEST(ThreadPoolAwaitingWork, EnqueuePauseEnqueue) {
   for (size_t i = hw_concurrency; i != 2 * hw_concurrency; ++i)
     thread_pool_enqueue_task(pool, task, &numbers[i], nullptr);
 
-  thread_pool_wait_and_destroy(pool);
+  int error = thread_pool_wait_and_destroy(pool);
+  EXPECT_FALSE(error);
   for (size_t i = 0; i != 2 * hw_concurrency; ++i) EXPECT_EQ(numbers[i], i * i);
 }
 

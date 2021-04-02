@@ -34,11 +34,13 @@ int thread_pool_enqueue_task(thread_pool_t *pool, task_t task, void *args,
 ///@brief блокирует вызывающий поток, пока не выполнятся все задачи, затем
 ///разрушает пул и освобождает ресурсы
 ///@param pool указатель на пул, не может быт NULL
-void thread_pool_wait_and_destroy(thread_pool_t *pool);
+///@return 0 в случае успеха, -1 в случае ошибки
+int thread_pool_wait_and_destroy(thread_pool_t *pool);
 
 ///@brief блокирует вызывающий поток, пока не выполнятся текущие задачи, затем
 ///разрушает пул и освобождает ресурсы
 ///@param pool указатель на пул, не может быть NULL
-void thread_pool_cancel_and_destroy(thread_pool_t *pool);
+///@return 0 в случае успеха, -1 в случае ошибки
+int thread_pool_cancel_and_destroy(thread_pool_t *pool);
 
 #endif  // THREAD_POOL_INCLUDE_THREAD_POOL_H_
