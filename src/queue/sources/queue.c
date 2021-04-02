@@ -1,10 +1,10 @@
 // Copyright 2021 Kam1runetzLabs <notsoserious2017@gmail.com>
 
+#include "queue.h"
+
 #include <assert.h>
 #include <malloc.h>
 #include <stddef.h>
-
-#include "queue.h"
 
 typedef struct node {
   struct node *next;
@@ -26,7 +26,7 @@ queue_t *queue_init() {
 }
 
 int queue_push(queue_t *queue, void *value) {
-  assert(queue != NULL);
+  if (!queue) return -1;
 
   node_t *new_node = (node_t *)malloc(sizeof(node_t));
   if (!new_node) return -1;
@@ -45,24 +45,25 @@ int queue_push(queue_t *queue, void *value) {
   return 0;
 }
 
-void *queue_pop(queue_t *queue) {
-  assert(queue != NULL && queue->head != NULL);
+int queue_pop(queue_t *queue, void **element) {
+  if (!queue || !element) return -1;
+  if (!queue->head) return -1;
 
   node_t *tmp_head = queue->head;
-  void *ret_value = tmp_head->value;
+  *element = tmp_head->value;
   queue->head = queue->head->next;
   free(tmp_head);
   --queue->size;
-  return ret_value;
+  return 0;
 }
 
 size_t queue_size(const queue_t *queue) {
-  assert(queue != NULL);
+  if (!queue) return 0;
   return queue->size;
 }
 
 bool queue_empty(const queue_t *queue) {
-  assert(queue != NULL);
+  if (!queue) return true;
   return queue->size == 0;
 }
 

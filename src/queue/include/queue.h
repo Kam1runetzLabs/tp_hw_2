@@ -18,15 +18,16 @@ queue_t *queue_init();
 int queue_push(queue_t *queue, void *value);
 
 ///@param queue указатель на очередь, не должен быть NULL
-///@return первый элемент очереди
-void *queue_pop(queue_t *queue);
+///@param element указатель, в который будет помещено вынимаемое значение
+///@return 0 в случае успеха, -1 в случае ошибки
+int queue_pop(queue_t *queue, void **element);
 
 ///@param queue указатель на очередь, не должен быть NULL
-///@return размер очереди
+///@return размер очереди, 0 в случае если очередь пуста или передан NULL
 size_t queue_size(const queue_t *queue);
 
 ///@param queue указатель на очередь, не должен быть NULL
-///@return true если очередь пуста, иначе false
+///@return true если очередь пуста или передан NULL, иначе false
 bool queue_empty(const queue_t *queue);
 
 ///@param queue указатель на удаляемую очередь, может быть NULL
