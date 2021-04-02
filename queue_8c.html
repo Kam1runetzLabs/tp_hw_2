@@ -89,8 +89,7 @@ $(document).ready(function(){initNavTree('queue_8c.html',''); initResizable(); }
 <div class="title">queue.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;assert.h&gt;</code><br />
-<code>#include &lt;malloc.h&gt;</code><br />
+<div class="textblock"><code>#include &lt;malloc.h&gt;</code><br />
 <code>#include &lt;stddef.h&gt;</code><br />
 <code>#include &quot;<a class="el" href="queue_8h_source.html">queue.h</a>&quot;</code><br />
 </div><table class="memberdecls">
@@ -113,8 +112,8 @@ Functions</h2></td></tr>
 <tr class="separator:a5ee725516e012934ca0be0c4e233d4ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a752df94fa15e5b5b8a9225a3b35a786d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="queue_8c.html#a752df94fa15e5b5b8a9225a3b35a786d">queue_push</a> (<a class="el" href="queue_8h.html#aa8acf648f3b0c69d7e132fcc61dc58c7">queue_t</a> *<a class="el" href="structqueue.html">queue</a>, void *value)</td></tr>
 <tr class="separator:a752df94fa15e5b5b8a9225a3b35a786d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abf41ee5b3448983fa265b645c7319e4a"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="queue_8c.html#abf41ee5b3448983fa265b645c7319e4a">queue_pop</a> (<a class="el" href="queue_8h.html#aa8acf648f3b0c69d7e132fcc61dc58c7">queue_t</a> *<a class="el" href="structqueue.html">queue</a>)</td></tr>
-<tr class="separator:abf41ee5b3448983fa265b645c7319e4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab459d7fb7d3bb4509b4baa25c3afbcd9"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="queue_8c.html#ab459d7fb7d3bb4509b4baa25c3afbcd9">queue_pop</a> (<a class="el" href="queue_8h.html#aa8acf648f3b0c69d7e132fcc61dc58c7">queue_t</a> *<a class="el" href="structqueue.html">queue</a>, void **element)</td></tr>
+<tr class="separator:ab459d7fb7d3bb4509b4baa25c3afbcd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af9cc8ddb60b6a3bbf9f3fc86b35b3c3f"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="queue_8c.html#af9cc8ddb60b6a3bbf9f3fc86b35b3c3f">queue_size</a> (const <a class="el" href="queue_8h.html#aa8acf648f3b0c69d7e132fcc61dc58c7">queue_t</a> *<a class="el" href="structqueue.html">queue</a>)</td></tr>
 <tr class="separator:af9cc8ddb60b6a3bbf9f3fc86b35b3c3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5a3ed34bc73d4b14ab8ccde73fa91738"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="queue_8c.html#a5a3ed34bc73d4b14ab8ccde73fa91738">queue_empty</a> (const <a class="el" href="queue_8h.html#aa8acf648f3b0c69d7e132fcc61dc58c7">queue_t</a> *<a class="el" href="structqueue.html">queue</a>)</td></tr>
@@ -159,7 +158,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>true если очередь пуста, иначе false </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>true если очередь пуста или передан NULL, иначе false </dd></dl>
 
 </div>
 </div>
@@ -207,28 +206,39 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="abf41ee5b3448983fa265b645c7319e4a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abf41ee5b3448983fa265b645c7319e4a">&#9670;&nbsp;</a></span>queue_pop()</h2>
+<a id="ab459d7fb7d3bb4509b4baa25c3afbcd9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab459d7fb7d3bb4509b4baa25c3afbcd9">&#9670;&nbsp;</a></span>queue_pop()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void* queue_pop </td>
+          <td class="memname">int queue_pop </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="queue_8h.html#aa8acf648f3b0c69d7e132fcc61dc58c7">queue_t</a> *&#160;</td>
-          <td class="paramname"><em>queue</em></td><td>)</td>
+          <td class="paramname"><em>queue</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">void **&#160;</td>
+          <td class="paramname"><em>element</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">queue</td><td>указатель на очередь, не должен быть NULL </td></tr>
+    <tr><td class="paramname">element</td><td>указатель, в который будет помещено вынимаемое значение </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>первый элемент очереди </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>0 в случае успеха, -1 в случае ошибки </dd></dl>
 
 </div>
 </div>
@@ -289,7 +299,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>размер очереди </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>размер очереди, 0 в случае если очередь пуста или передан NULL </dd></dl>
 
 </div>
 </div>

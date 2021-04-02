@@ -107,9 +107,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a10daf9d1079e6053698594ef1e24b439"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="vectors_8h.html#a10daf9d1079e6053698594ef1e24b439">vectors_fill</a> (FILE *file, <a class="el" href="vectors_8h.html#a1e40576fcfeb5d0e5d703292c7184071">vectors_t</a> *<a class="el" href="structvectors.html">vectors</a>)</td></tr>
 <tr class="memdesc:a10daf9d1079e6053698594ef1e24b439"><td class="mdescLeft">&#160;</td><td class="mdescRight">заполняет векторы координатами из файла, если какие-то координаты остались не заполнены, то они считаются нулевыми  <a href="vectors_8h.html#a10daf9d1079e6053698594ef1e24b439">More...</a><br /></td></tr>
 <tr class="separator:a10daf9d1079e6053698594ef1e24b439"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac769c44df793c09e8a80b3aab6d1daaa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="vectors_8h.html#ac769c44df793c09e8a80b3aab6d1daaa">vectors_add_vector</a> (<a class="el" href="vectors_8h.html#a1e40576fcfeb5d0e5d703292c7184071">vectors_t</a> *<a class="el" href="structvectors.html">vectors</a>, const <a class="el" href="float__array_8h.html#a8776daf6c76f052475bd53831d364c45">float_array_t</a> *vectors_coords)</td></tr>
-<tr class="memdesc:ac769c44df793c09e8a80b3aab6d1daaa"><td class="mdescLeft">&#160;</td><td class="mdescRight">добавляет вектор в хранилище векторов, если количество векторов не превышает вместимость хранилища  <a href="vectors_8h.html#ac769c44df793c09e8a80b3aab6d1daaa">More...</a><br /></td></tr>
-<tr class="separator:ac769c44df793c09e8a80b3aab6d1daaa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a74248b5e780edf2b21b9742afc91ec11"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="vectors_8h.html#a74248b5e780edf2b21b9742afc91ec11">vectors_add_vector</a> (<a class="el" href="vectors_8h.html#a1e40576fcfeb5d0e5d703292c7184071">vectors_t</a> *<a class="el" href="structvectors.html">vectors</a>, const <a class="el" href="float__array_8h.html#a8776daf6c76f052475bd53831d364c45">float_array_t</a> *vectors_coords)</td></tr>
+<tr class="memdesc:a74248b5e780edf2b21b9742afc91ec11"><td class="mdescLeft">&#160;</td><td class="mdescRight">добавляет вектор в хранилище векторов, если количество векторов не превышает вместимость хранилища  <a href="vectors_8h.html#a74248b5e780edf2b21b9742afc91ec11">More...</a><br /></td></tr>
+<tr class="separator:a74248b5e780edf2b21b9742afc91ec11"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a34f555ba6943825ae5bfc218261e60e0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="float__array_8h.html#a8776daf6c76f052475bd53831d364c45">float_array_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="vectors_8h.html#a34f555ba6943825ae5bfc218261e60e0">vectors_get_coords</a> (const <a class="el" href="vectors_8h.html#a1e40576fcfeb5d0e5d703292c7184071">vectors_t</a> *<a class="el" href="structvectors.html">vectors</a>, size_t dim)</td></tr>
 <tr class="memdesc:a34f555ba6943825ae5bfc218261e60e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">возвращает массив координат заданого измерения всех векторов  <a href="vectors_8h.html#a34f555ba6943825ae5bfc218261e60e0">More...</a><br /></td></tr>
 <tr class="separator:a34f555ba6943825ae5bfc218261e60e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -140,14 +140,14 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="ac769c44df793c09e8a80b3aab6d1daaa"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac769c44df793c09e8a80b3aab6d1daaa">&#9670;&nbsp;</a></span>vectors_add_vector()</h2>
+<a id="a74248b5e780edf2b21b9742afc91ec11"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a74248b5e780edf2b21b9742afc91ec11">&#9670;&nbsp;</a></span>vectors_add_vector()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void vectors_add_vector </td>
+          <td class="memname">int vectors_add_vector </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="vectors_8h.html#a1e40576fcfeb5d0e5d703292c7184071">vectors_t</a> *&#160;</td>
           <td class="paramname"><em>vectors</em>, </td>
@@ -174,6 +174,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>0 при успешном выполнении, -1 при ошибке </dd></dl>
 
 </div>
 </div>
@@ -198,7 +199,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>вместимость хранилища, задается при инициализации хранилища и не изменяется </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>вместимость хранилища, задается при инициализации хранилища и не изменяется, 0 в случае, если передан NULL </dd></dl>
 
 </div>
 </div>
@@ -225,7 +226,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>количество векторов </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>количество векторов, 0 в случае если передан NULL или количесво векторов равно 0 </dd></dl>
 
 </div>
 </div>
@@ -250,7 +251,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>размерность векторов в хранилище </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>размерность векторов в хранилище, 0 в случае, если передан NULL </dd></dl>
 
 </div>
 </div>
@@ -352,7 +353,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>указатель на массив координат, возвращается не копия </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>указатель на массив координат, возвращается не копия, NULL в случае ошибки </dd></dl>
 
 </div>
 </div>

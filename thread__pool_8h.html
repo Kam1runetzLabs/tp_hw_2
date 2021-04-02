@@ -112,12 +112,12 @@ Functions</h2></td></tr>
 <tr class="memitem:a9c291b3152709c784565f27797119ce5"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="thread__pool_8h.html#a9c291b3152709c784565f27797119ce5">thread_pool_enqueue_task</a> (<a class="el" href="thread__pool_8h.html#aa236903b6229b25056431e84eba8d477">thread_pool_t</a> *pool, <a class="el" href="thread__pool_8h.html#ae9a599e02004249d7aefa6d4adfafa34">task_t</a> task, void *args, <a class="el" href="thread__pool_8h.html#a6606db2de0f69b8f5299274344c2628b">callback_t</a> callback)</td></tr>
 <tr class="memdesc:a9c291b3152709c784565f27797119ce5"><td class="mdescLeft">&#160;</td><td class="mdescRight">добавляет задачу в очередь на выполнение  <a href="thread__pool_8h.html#a9c291b3152709c784565f27797119ce5">More...</a><br /></td></tr>
 <tr class="separator:a9c291b3152709c784565f27797119ce5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeade0ef9ed699fb72e8689babf83f12f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="thread__pool_8h.html#aeade0ef9ed699fb72e8689babf83f12f">thread_pool_wait_and_destroy</a> (<a class="el" href="thread__pool_8h.html#aa236903b6229b25056431e84eba8d477">thread_pool_t</a> *pool)</td></tr>
-<tr class="memdesc:aeade0ef9ed699fb72e8689babf83f12f"><td class="mdescLeft">&#160;</td><td class="mdescRight">блокирует вызывающий поток, пока не выполнятся все задачи, затем разрушает пул и освобождает ресурсы  <a href="thread__pool_8h.html#aeade0ef9ed699fb72e8689babf83f12f">More...</a><br /></td></tr>
-<tr class="separator:aeade0ef9ed699fb72e8689babf83f12f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a870a85d1c1dd960f41e1354f80f31a14"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="thread__pool_8h.html#a870a85d1c1dd960f41e1354f80f31a14">thread_pool_cancel_and_destroy</a> (<a class="el" href="thread__pool_8h.html#aa236903b6229b25056431e84eba8d477">thread_pool_t</a> *pool)</td></tr>
-<tr class="memdesc:a870a85d1c1dd960f41e1354f80f31a14"><td class="mdescLeft">&#160;</td><td class="mdescRight">блокирует вызывающий поток, пока не выполнятся текущие задачи, затем разрушает пул и освобождает ресурсы  <a href="thread__pool_8h.html#a870a85d1c1dd960f41e1354f80f31a14">More...</a><br /></td></tr>
-<tr class="separator:a870a85d1c1dd960f41e1354f80f31a14"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a490e2723f4c2c444a7ca4f4fb6dd3e1b"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="thread__pool_8h.html#a490e2723f4c2c444a7ca4f4fb6dd3e1b">thread_pool_wait_and_destroy</a> (<a class="el" href="thread__pool_8h.html#aa236903b6229b25056431e84eba8d477">thread_pool_t</a> *pool)</td></tr>
+<tr class="memdesc:a490e2723f4c2c444a7ca4f4fb6dd3e1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">блокирует вызывающий поток, пока не выполнятся все задачи, затем разрушает пул и освобождает ресурсы  <a href="thread__pool_8h.html#a490e2723f4c2c444a7ca4f4fb6dd3e1b">More...</a><br /></td></tr>
+<tr class="separator:a490e2723f4c2c444a7ca4f4fb6dd3e1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab6a723fff2bc2b31a36a89b80e29b695"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="thread__pool_8h.html#ab6a723fff2bc2b31a36a89b80e29b695">thread_pool_cancel_and_destroy</a> (<a class="el" href="thread__pool_8h.html#aa236903b6229b25056431e84eba8d477">thread_pool_t</a> *pool)</td></tr>
+<tr class="memdesc:ab6a723fff2bc2b31a36a89b80e29b695"><td class="mdescLeft">&#160;</td><td class="mdescRight">блокирует вызывающий поток, пока не выполнятся текущие задачи, затем разрушает пул и освобождает ресурсы  <a href="thread__pool_8h.html#ab6a723fff2bc2b31a36a89b80e29b695">More...</a><br /></td></tr>
+<tr class="separator:ab6a723fff2bc2b31a36a89b80e29b695"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Typedef Documentation</h2>
 <a id="a6606db2de0f69b8f5299274344c2628b"></a>
@@ -181,14 +181,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a870a85d1c1dd960f41e1354f80f31a14"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a870a85d1c1dd960f41e1354f80f31a14">&#9670;&nbsp;</a></span>thread_pool_cancel_and_destroy()</h2>
+<a id="ab6a723fff2bc2b31a36a89b80e29b695"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab6a723fff2bc2b31a36a89b80e29b695">&#9670;&nbsp;</a></span>thread_pool_cancel_and_destroy()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void thread_pool_cancel_and_destroy </td>
+          <td class="memname">int thread_pool_cancel_and_destroy </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="thread__pool_8h.html#aa236903b6229b25056431e84eba8d477">thread_pool_t</a> *&#160;</td>
           <td class="paramname"><em>pool</em></td><td>)</td>
@@ -204,6 +204,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>0 в случае успеха, -1 в случае ошибки </dd></dl>
 
 </div>
 </div>
@@ -286,14 +287,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="aeade0ef9ed699fb72e8689babf83f12f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aeade0ef9ed699fb72e8689babf83f12f">&#9670;&nbsp;</a></span>thread_pool_wait_and_destroy()</h2>
+<a id="a490e2723f4c2c444a7ca4f4fb6dd3e1b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a490e2723f4c2c444a7ca4f4fb6dd3e1b">&#9670;&nbsp;</a></span>thread_pool_wait_and_destroy()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void thread_pool_wait_and_destroy </td>
+          <td class="memname">int thread_pool_wait_and_destroy </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="thread__pool_8h.html#aa236903b6229b25056431e84eba8d477">thread_pool_t</a> *&#160;</td>
           <td class="paramname"><em>pool</em></td><td>)</td>
@@ -309,6 +310,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>0 в случае успеха, -1 в случае ошибки </dd></dl>
 
 </div>
 </div>

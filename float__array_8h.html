@@ -119,10 +119,10 @@ Functions</h2></td></tr>
 <tr class="separator:a2c32396eca88bddc545a223ec3f19b57"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6eb0c41c7966ba2a9227766faf43a458"><td class="memItemLeft" align="right" valign="top"><a class="el" href="float__array_8h.html#ae82daa8c8f0dd8b409e0ff1ad989a699">const_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="float__array_8h.html#a6eb0c41c7966ba2a9227766faf43a458">float_array_cend</a> (const <a class="el" href="float__array_8h.html#a8776daf6c76f052475bd53831d364c45">float_array_t</a> *array)</td></tr>
 <tr class="separator:a6eb0c41c7966ba2a9227766faf43a458"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6d03c4015b9fbee4b79a33b468d3db40"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="float__array_8h.html#a6d03c4015b9fbee4b79a33b468d3db40">float_array_get_element</a> (const <a class="el" href="float__array_8h.html#a8776daf6c76f052475bd53831d364c45">float_array_t</a> *array, size_t index)</td></tr>
-<tr class="separator:a6d03c4015b9fbee4b79a33b468d3db40"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aacc379eff219d247929f0efc20cd9e90"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="float__array_8h.html#aacc379eff219d247929f0efc20cd9e90">float_array_set_element</a> (<a class="el" href="float__array_8h.html#a8776daf6c76f052475bd53831d364c45">float_array_t</a> *array, size_t index, float value)</td></tr>
-<tr class="separator:aacc379eff219d247929f0efc20cd9e90"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a649b1554b974e9108818a9aceff46ca5"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="float__array_8h.html#a649b1554b974e9108818a9aceff46ca5">float_array_get_element</a> (const <a class="el" href="float__array_8h.html#a8776daf6c76f052475bd53831d364c45">float_array_t</a> *array, size_t index, float *element)</td></tr>
+<tr class="separator:a649b1554b974e9108818a9aceff46ca5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0603730e55b1e84d1ea87f81eaa35f7b"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="float__array_8h.html#a0603730e55b1e84d1ea87f81eaa35f7b">float_array_set_element</a> (<a class="el" href="float__array_8h.html#a8776daf6c76f052475bd53831d364c45">float_array_t</a> *array, size_t index, float value)</td></tr>
+<tr class="separator:a0603730e55b1e84d1ea87f81eaa35f7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Typedef Documentation</h2>
 <a id="ae82daa8c8f0dd8b409e0ff1ad989a699"></a>
@@ -189,7 +189,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>указатель на начало массива </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>указатель на начало массива, NULL в случае ошибки </dd></dl>
 
 </div>
 </div>
@@ -214,7 +214,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>константный указатель на начало массива </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>константный указатель на начало массива, NULL в случае ошибки </dd></dl>
 
 </div>
 </div>
@@ -239,7 +239,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>константный указатель на конец массива (begin + size) </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>константный указатель на конец массива (begin + size), NULL в случае ошибки </dd></dl>
 
 </div>
 </div>
@@ -264,7 +264,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>указатель на конец массива (begin + size) </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>указатель на конец массива (begin + size), NULL в случае ошибки </dd></dl>
 
 </div>
 </div>
@@ -294,14 +294,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a6d03c4015b9fbee4b79a33b468d3db40"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6d03c4015b9fbee4b79a33b468d3db40">&#9670;&nbsp;</a></span>float_array_get_element()</h2>
+<a id="a649b1554b974e9108818a9aceff46ca5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a649b1554b974e9108818a9aceff46ca5">&#9670;&nbsp;</a></span>float_array_get_element()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">float float_array_get_element </td>
+          <td class="memname">int float_array_get_element </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="float__array_8h.html#a8776daf6c76f052475bd53831d364c45">float_array_t</a> *&#160;</td>
           <td class="paramname"><em>array</em>, </td>
@@ -310,7 +310,13 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>index</em>&#160;</td>
+          <td class="paramname"><em>index</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float *&#160;</td>
+          <td class="paramname"><em>element</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -323,10 +329,11 @@ Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">array</td><td>указатель на массив, не может быть NULL </td></tr>
     <tr><td class="paramname">index</td><td>индекс элемента, должен быть 0 &lt;= index &lt; array_size </td></tr>
+    <tr><td class="paramname">element</td><td>указатель на элемент, в который будет занесено значение </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>значение элемента </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>0 в случае успеха, -1 в случае ошибки </dd></dl>
 
 </div>
 </div>
@@ -357,14 +364,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="aacc379eff219d247929f0efc20cd9e90"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aacc379eff219d247929f0efc20cd9e90">&#9670;&nbsp;</a></span>float_array_set_element()</h2>
+<a id="a0603730e55b1e84d1ea87f81eaa35f7b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0603730e55b1e84d1ea87f81eaa35f7b">&#9670;&nbsp;</a></span>float_array_set_element()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void float_array_set_element </td>
+          <td class="memname">int float_array_set_element </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="float__array_8h.html#a8776daf6c76f052475bd53831d364c45">float_array_t</a> *&#160;</td>
           <td class="paramname"><em>array</em>, </td>
@@ -396,6 +403,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>0 в случае успеха, -1 в случае ошибки </dd></dl>
 
 </div>
 </div>
@@ -420,7 +428,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>размер массива </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>размер массива, 0 в случае если передан NULL </dd></dl>
 
 </div>
 </div>
