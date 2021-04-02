@@ -14,8 +14,11 @@ const size_t invalid_array_size = -1;
 TEST(FloatArrayInit, ValidInitFloatArray) {
   float_array_t *array = float_array_init(array_size);
   EXPECT_TRUE(array);
-  for (size_t i = 0; i != array_size; ++i)
-    EXPECT_FLOAT_EQ(0.f, float_array_get_element(array, i));
+  for (size_t i = 0; i != array_size; ++i) {
+    float element;
+    float_array_get_element(array, i, &element);
+    EXPECT_FLOAT_EQ(0.f, element);
+  }
   float_array_free(array);
 }
 
@@ -25,9 +28,8 @@ TEST(FloatArrayInit, InitWithInvalidSize) {
 }
 
 TEST(FloatArrayInit, InitWithNullSize) {
-  float_array_t *array = nullptr;
-  EXPECT_EXIT(array = float_array_init(0), ::testing::KilledBySignal(SIGABRT),
-              "");
+  float_array_t *array;
+  array = float_array_init(0);
   EXPECT_FALSE(array);
 }
 
@@ -39,7 +41,8 @@ TEST(FloatArraySizeGetter, GettingArraySize) {
 
 TEST(FloatArraySizeGetter, GettingNullArraySize) {
   float_array_t *array = nullptr;
-  EXPECT_EXIT(float_array_size(array), ::testing::KilledBySignal(SIGABRT), "");
+  size_t size = float_array_size(array);
+  EXPECT_EQ(size, 0);
 }
 
 TEST(FloatArrayIterators, BeginIterator) {
@@ -49,13 +52,16 @@ TEST(FloatArrayIterators, BeginIterator) {
     float_array_set_element(array, i, static_cast<float>(rand_r(&seed)));
   iterator begin = float_array_begin(array);
   EXPECT_TRUE(begin);
-  EXPECT_EQ(*begin, float_array_get_element(array, 0));
+  float element;
+  float_array_get_element(array, 0, &element);
+  EXPECT_FLOAT_EQ(*begin, element);
   float_array_free(array);
 }
 
 TEST(FloatArrayIterators, BeginIteratorFromNullArray) {
   float_array_t *array = nullptr;
-  EXPECT_EXIT(float_array_begin(array), ::testing::KilledBySignal(SIGABRT), "");
+  iterator begin = float_array_begin(array);
+  EXPECT_FALSE(begin);
 }
 
 TEST(FloatArrayIterators, EndIterator) {
@@ -70,7 +76,8 @@ TEST(FloatArrayIterators, EndIterator) {
 
 TEST(FloatArrayIterators, EndIteratorFromNullArray) {
   float_array_t *array = nullptr;
-  EXPECT_EXIT(float_array_end(array), ::testing::KilledBySignal(SIGABRT), "");
+  iterator end = float_array_end(array);
+  EXPECT_FALSE(end);
 }
 
 TEST(FloatArrayIterators, AssignValueByIterator) {
@@ -78,11 +85,15 @@ TEST(FloatArrayIterators, AssignValueByIterator) {
   float_array_t *array = float_array_init(array_size);
   iterator begin = float_array_begin(array);
   const size_t index = rand_r(&seed) % array_size;
-  EXPECT_FLOAT_EQ(float_array_get_element(array, index), 0.f);
+  float element;
+  float_array_get_element(array, index, &element);
+  EXPECT_FLOAT_EQ(element, 0.f);
 
   const float value = 12.34;
   *(begin + index) = value;
-  EXPECT_FLOAT_EQ(float_array_get_element(array, index), value);
+  float_array_get_element(array, index, &element);
+  EXPECT_FLOAT_EQ(element, value);
+  float_array_free(array);
 }
 
 TEST(FloatArrayConstIterators, CBeginIterator) {
@@ -92,14 +103,16 @@ TEST(FloatArrayConstIterators, CBeginIterator) {
     float_array_set_element(array, i, static_cast<float>(rand_r(&seed)));
   const_iterator begin = float_array_cbegin(array);
   EXPECT_TRUE(begin);
-  EXPECT_EQ(*begin, float_array_get_element(array, 0));
+  float element;
+  float_array_get_element(array, 0, &element);
+  EXPECT_FLOAT_EQ(*begin, element);
   float_array_free(array);
 }
 
 TEST(FloatArrayConstIterators, CBeginIteratorFromNullArray) {
   float_array_t *array = nullptr;
-  EXPECT_EXIT(float_array_cbegin(array), ::testing::KilledBySignal(SIGABRT),
-              "");
+  const_iterator begin = float_array_cbegin(array);
+  EXPECT_FALSE(begin);
 }
 
 TEST(FloatArrayConstIterators, CEndIterator) {
@@ -114,7 +127,8 @@ TEST(FloatArrayConstIterators, CEndIterator) {
 
 TEST(FloatArrayConstIterators, CEndIteratorFromNullArray) {
   float_array_t *array = nullptr;
-  EXPECT_EXIT(float_array_cend(array), ::testing::KilledBySignal(SIGABRT), "");
+  const_iterator end = float_array_cend(array);
+  EXPECT_FALSE(end);
 }
 
 TEST(FloatArrayGetElement, GettingElement) {
@@ -124,21 +138,32 @@ TEST(FloatArrayGetElement, GettingElement) {
   const size_t index = rand_r(&seed) % array_size;
   const float value = 12.34;
   *(it + index) = value;
-  EXPECT_FLOAT_EQ(float_array_get_element(array, index), value);
+  float element;
+  float_array_get_element(array, index, &element);
+  EXPECT_FLOAT_EQ(element, value);
   float_array_free(array);
 }
 
 TEST(FloatArrayGetElement, GettingElementFromNullArray) {
   const size_t index = 1;
   float_array_t *array = nullptr;
-  EXPECT_EXIT(float_array_get_element(array, index),
-              ::testing::KilledBySignal(SIGABRT), "");
+  float element;
+  int error = float_array_get_element(array, index, &element);
+  EXPECT_TRUE(error);
 }
 
 TEST(FloatArrayGetElement, GettingElementFromOverRangeArray) {
   float_array_t *array = float_array_init(array_size);
-  EXPECT_EXIT(float_array_get_element(array, array_size),
-              ::testing::KilledBySignal(SIGABRT), "");
+  float element;
+  int error = float_array_get_element(array, array_size, &element);
+  EXPECT_TRUE(error);
+  float_array_free(array);
+}
+
+TEST(FloatArrayGetElement, GettingElementToNullValuePtr) {
+  float_array_t *array = float_array_init(array_size);
+  int error = float_array_get_element(array, array_size, NULL);
+  EXPECT_TRUE(error);
   float_array_free(array);
 }
 
@@ -148,7 +173,9 @@ TEST(FloatArraySetElement, SettingElement) {
   const size_t index = rand_r(&seed) % array_size;
   const float value = 12.34;
   float_array_set_element(array, index, value);
-  EXPECT_FLOAT_EQ(float_array_get_element(array, index), value);
+  float element;
+  float_array_get_element(array, index, &element);
+  EXPECT_FLOAT_EQ(element, value);
   float_array_free(array);
 }
 
@@ -156,14 +183,14 @@ TEST(FloatArraySetElement, SettingElementToNullArray) {
   const size_t index = 1;
   const float value = 12.34;
   float_array_t *array = nullptr;
-  EXPECT_EXIT(float_array_set_element(array, index, value),
-              ::testing::KilledBySignal(SIGABRT), "");
+  int error = float_array_set_element(array, index, value);
+  EXPECT_TRUE(error);
 }
 
 TEST(FloatArraySetElement, SettingElementToOverRangeArray) {
   float_array_t *array = float_array_init(array_size);
   const float value = 12.34;
-  EXPECT_EXIT(float_array_set_element(array, array_size, value),
-              ::testing::KilledBySignal(SIGABRT), "");
+  int error = float_array_set_element(array, array_size, value);
+  EXPECT_TRUE(error);
   float_array_free(array);
 }
