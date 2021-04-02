@@ -1,10 +1,9 @@
 // Copyright 2021 Kam1runetzLabs <notsoserious2017@gmail.com>
 
-#include "queue.h"
-
-#include <assert.h>
 #include <malloc.h>
 #include <stddef.h>
+
+#include "queue.h"
 
 typedef struct node {
   struct node *next;
