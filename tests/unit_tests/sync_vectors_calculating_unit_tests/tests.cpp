@@ -32,8 +32,9 @@ TEST(CalcAvgVectors, CalcAvgVectors) {
   float_array_t *avg_vector = calc_avg_vector(vectors);
   for (size_t i = 0; i != dims; ++i) {
     float_array_t *coords_range = vectors_get_coords(vectors, i);
-    EXPECT_FLOAT_EQ(calc_avg_range(coords_range),
-                    float_array_get_element(avg_vector, i));
+    float coord;
+    float_array_get_element(avg_vector, i, &coord);
+    EXPECT_FLOAT_EQ(calc_avg_range(coords_range), coord);
   }
   float_array_free(avg_vector);
   vectors_free(vectors);
@@ -41,5 +42,6 @@ TEST(CalcAvgVectors, CalcAvgVectors) {
 
 TEST(CalcAvgVectors, CalcFromNullVectors) {
   vectors_t *vectors = nullptr;
-  EXPECT_EXIT(calc_avg_vector(vectors), ::testing::KilledBySignal(SIGABRT), "");
+  float_array_t *avg_vector = calc_avg_vector(vectors);
+  EXPECT_FALSE(avg_vector);
 }

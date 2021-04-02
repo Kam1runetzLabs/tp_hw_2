@@ -1,6 +1,5 @@
 // Copyright 2021 Kam1runetzLabs <notsoserious2017@gmail.com>
 
-#include <assert.h>
 #include <stddef.h>
 
 #include "vectors_calc.h"
@@ -11,13 +10,12 @@ static float float_range_avg(const float_array_t *array, size_t size) {
   const_iterator begin = float_array_cbegin(array);
   const_iterator end = float_array_cend(array);
 
-  for (const_iterator it = begin; it != end; ++it)
-    common += *it;
+  for (const_iterator it = begin; it != end; ++it) common += *it;
   return common / (float)size;
 }
 
 float_array_t *calc_avg_vector(const vectors_t *vectors) {
-  assert(vectors != NULL);
+  if (!vectors) return NULL;
   float_array_t *avg_vector = float_array_init(vectors_dims(vectors));
   if (!avg_vector) return NULL;
 
