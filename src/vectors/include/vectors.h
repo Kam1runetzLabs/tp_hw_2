@@ -29,28 +29,30 @@ int vectors_fill(FILE *file, vectors_t *vectors);
 ///@param vectors указатель на хранилище векторов, не может быть NULL
 ///@param vectors_coords указатель на вектор, размерность вектора должна быть
 ///равна размерности векторов в хранилище, не может быть NULL
-void vectors_add_vector(vectors_t *vectors,
-                        const float_array_t *vectors_coords);
+///@return 0 при успешном выполнении, -1 при ошибке
+int vectors_add_vector(vectors_t *vectors, const float_array_t *vectors_coords);
 
 ///@brief возвращает массив координат заданого измерения всех векторов
 ///@param vectors указатель на хранилище векторов, не может быть NULL
 ///@param dim измерение, координаты которого запрашиваются, должно быть 0 <= dim
 ///< vectors_dims
-///@return указатель на массив координат, возвращается не копия
+///@return указатель на массив координат, возвращается не копия, NULL в случае
+///ошибки
 float_array_t *vectors_get_coords(const vectors_t *vectors, size_t dim);
 
 ///@brief возвращает количество инициализированных векторов, изначально 0
 ///@param vectors указатель на хранилище векторов, не может быть NULL
-///@return количество векторов
+///@return количество векторов, 0 в случае если передан NULL или количесво
+///векторов равно 0
 size_t vectors_count(const vectors_t *vectors);
 
 ///@param vectors указатель на хранилище векторов, не может быть NULL
 ///@return вместимость хранилища, задается при инициализации хранилища и не
-///изменяется
+///изменяется, 0 в случае, если передан NULL
 size_t vectors_capacity(const vectors_t *vectors);
 
 ///@param vectors указатель на хранилище векторов, не может быть NULL
-///@return размерность векторов в хранилище
+///@return размерность векторов в хранилище, 0 в случае, если передан NULL
 size_t vectors_dims(const vectors_t *vectors);
 
 ///@brief разрушает хранилище и очищает ресурсы

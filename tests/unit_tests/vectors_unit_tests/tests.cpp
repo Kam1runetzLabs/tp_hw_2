@@ -33,12 +33,13 @@ TEST(VectorsInit, InvalidDimsInit) {
 }
 
 TEST(VectorsInit, NullCapacityInit) {
-  EXPECT_EXIT(vectors_init(0, dims), ::testing::KilledBySignal(SIGABRT), "");
+  vectors_t *vectors = vectors_init(0, dims);
+  EXPECT_FALSE(vectors);
 }
 
 TEST(VectorsInit, NullDimsInit) {
-  EXPECT_EXIT(vectors_init(capacity, 0), ::testing::KilledBySignal(SIGABRT),
-              "");
+  vectors_t *vectors = vectors_init(capacity, 0);
+  EXPECT_FALSE(vectors);
 }
 
 TEST(VectorsGetCoords, GetCoords) {
@@ -56,15 +57,15 @@ TEST(VectorsGetCoords, GetCoords) {
 TEST(VectorsGetCoords, GetCoordsFromNullVectors) {
   vectors_t *vectors = nullptr;
   const size_t dim = 0;
-  EXPECT_EXIT(vectors_get_coords(vectors, dim),
-              ::testing::KilledBySignal(SIGABRT), "");
+  float_array_t *coords = vectors_get_coords(vectors, dim);
+  EXPECT_FALSE(coords);
 }
 
 TEST(VectorsGetCoords, GetCoordsFromInvalidDim) {
   vectors_t *vectors = vectors_init(capacity, dims);
   const size_t dim = dims;
-  EXPECT_EXIT(vectors_get_coords(vectors, dim),
-              ::testing::KilledBySignal(SIGABRT), "");
+  float_array_t *coords = vectors_get_coords(vectors, dim);
+  EXPECT_FALSE(coords);
   vectors_free(vectors);
 }
 
@@ -77,14 +78,19 @@ TEST(VectorsAddVector, VectorsAddVector) {
        it != float_array_end(new_vector); ++it)
     *it = static_cast<float>(rand_r(&seed));
 
-  vectors_add_vector(vectors, new_vector);
+  int error = vectors_add_vector(vectors, new_vector);
+  EXPECT_FALSE(error);
   float_array_t *coords[dims];
 
   for (size_t i = 0; i != dims; ++i) coords[i] = vectors_get_coords(vectors, i);
 
-  for (size_t i = 0; i != dims; ++i)
-    EXPECT_FLOAT_EQ(float_array_get_element(new_vector, i),
-                    float_array_get_element(coords[i], 0));
+  for (size_t i = 0; i != dims; ++i) {
+    float new_vector_coord;
+    float first_vectors_coord;
+    float_array_get_element(new_vector, i, &new_vector_coord);
+    float_array_get_element(coords[i], 0, &first_vectors_coord);
+    EXPECT_FLOAT_EQ(first_vectors_coord, new_vector_coord);
+  }
   vectors_free(vectors);
   float_array_free(new_vector);
 }
@@ -92,24 +98,24 @@ TEST(VectorsAddVector, VectorsAddVector) {
 TEST(VectorsAddVector, VectorsAddVectorToNullVectors) {
   vectors_t *vectors = nullptr;
   float_array_t *new_vector = float_array_init(dims);
-  EXPECT_EXIT(vectors_add_vector(vectors, new_vector),
-              ::testing::KilledBySignal(SIGABRT), "");
+  int error = vectors_add_vector(vectors, new_vector);
+  EXPECT_TRUE(error);
   float_array_free(new_vector);
 }
 
 TEST(VectorsAddVector, VectorsAddNullVector) {
   vectors_t *vectors = vectors_init(capacity, dims);
   float_array_t *new_vector = nullptr;
-  EXPECT_EXIT(vectors_add_vector(vectors, new_vector),
-              ::testing::KilledBySignal(SIGABRT), "");
+  int error = vectors_add_vector(vectors, new_vector);
+  EXPECT_TRUE(error);
   vectors_free(vectors);
 }
 
 TEST(VectorsAddVector, VectorsAddInvalidVector) {
   vectors_t *vectors = vectors_init(capacity, dims);
   float_array_t *new_vector = float_array_init(dims + 1);
-  EXPECT_EXIT(vectors_add_vector(vectors, new_vector),
-              ::testing::KilledBySignal(SIGABRT), "");
+  int error = vectors_add_vector(vectors, new_vector);
+  EXPECT_TRUE(error);
   vectors_free(vectors);
   float_array_free(new_vector);
 }
@@ -123,8 +129,8 @@ TEST(VectorsAddVector, AddVectorToFullVectors) {
   }
 
   float_array_t *new_vector = float_array_init(dims);
-  EXPECT_EXIT(vectors_add_vector(vectors, new_vector),
-              ::testing::KilledBySignal(SIGABRT), "");
+  int error = vectors_add_vector(vectors, new_vector);
+  EXPECT_TRUE(error);
   float_array_free(new_vector);
   vectors_free(vectors);
 }
@@ -141,7 +147,8 @@ TEST(VectorsCount, VectorsCount) {
 
 TEST(VectorsCount, VectorsCountFromNullVectors) {
   vectors_t *vectors = nullptr;
-  EXPECT_EXIT(vectors_count(vectors), ::testing::KilledBySignal(SIGABRT), "");
+  size_t count = vectors_count(vectors);
+  EXPECT_EQ(count, 0);
 }
 
 TEST(VectorsCapacity, VectorsCapacity) {
@@ -152,8 +159,8 @@ TEST(VectorsCapacity, VectorsCapacity) {
 
 TEST(VectorsCapacity, NullVectorsCapacity) {
   vectors_t *vectors = nullptr;
-  EXPECT_EXIT(vectors_capacity(vectors), ::testing::KilledBySignal(SIGABRT),
-              "");
+  size_t cap = vectors_capacity(vectors);
+  EXPECT_EQ(cap, 0);
 }
 
 TEST(VectorsDims, VectorsDims) {
@@ -164,7 +171,8 @@ TEST(VectorsDims, VectorsDims) {
 
 TEST(VectorsDims, NullVectorsDims) {
   vectors_t *vectors = nullptr;
-  EXPECT_EXIT(vectors_dims(vectors), ::testing::KilledBySignal(SIGABRT), "");
+  size_t v_dims = vectors_dims(vectors);
+  EXPECT_EQ(v_dims, 0);
 }
 
 static void fill_vectors_file(const std::string &fname) {
@@ -195,8 +203,8 @@ TEST(FillVectors, FillVectors) {
 TEST(FillVectors, FillVectorsFromNullFile) {
   FILE *file = nullptr;
   vectors_t *vectors = vectors_init(capacity, dims);
-  EXPECT_EXIT(vectors_fill(file, vectors), ::testing::KilledBySignal(SIGABRT),
-              "");
+  int error = vectors_fill(file, vectors);
+  EXPECT_TRUE(error);
   vectors_free(vectors);
 }
 
@@ -205,8 +213,8 @@ TEST(FillVectors, FillNullVectors) {
   fill_vectors_file(fname);
   vectors_t *vectors = nullptr;
   FILE *file = fopen(fname.c_str(), "r");
-  EXPECT_EXIT(vectors_fill(file, vectors), ::testing::KilledBySignal(SIGABRT),
-              "");
+  int error = vectors_fill(file, vectors);
+  EXPECT_TRUE(error);
   fclose(file);
   remove_file(fname);
 }

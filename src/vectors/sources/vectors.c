@@ -1,12 +1,12 @@
 // Copyright 2021 Kam1runetzLabs <notsoserious2017@gmail.com>
 
-#include <assert.h>
+#include "vectors.h"
+
 #include <malloc.h>
 #include <stddef.h>
 #include <stdio.h>
 
 #include "float_array.h"
-#include "vectors.h"
 
 typedef struct vectors {
   float_array_t **coords;
@@ -15,7 +15,7 @@ typedef struct vectors {
 } vectors_t;
 
 vectors_t *vectors_init(size_t capacity, size_t dims) {
-  assert(capacity != 0 && dims != 0);
+  if (!capacity || !dims) return NULL;
 
   vectors_t *vectors = (vectors_t *)malloc(sizeof(vectors_t));
   if (!vectors) return NULL;
@@ -41,7 +41,7 @@ vectors_t *vectors_init(size_t capacity, size_t dims) {
 }
 
 int vectors_fill(FILE *file, vectors_t *vectors) {
-  assert(file != NULL && vectors != NULL);
+  if (!file || !vectors) return -1;
   size_t dims = vectors_dims(vectors);
 
   for (size_t i = 0; i != dims; ++i) {
@@ -60,37 +60,39 @@ int vectors_fill(FILE *file, vectors_t *vectors) {
   return 0;
 }
 
-void vectors_add_vector(vectors_t *vectors,
-                        const float_array_t *vectors_coords) {
-  assert(vectors != NULL && vectors_coords != NULL);
-  assert(vectors->count < vectors_capacity(vectors));
-  assert(float_array_size(vectors_coords) == vectors->dims);
+int vectors_add_vector(vectors_t *vectors,
+                       const float_array_t *vectors_coords) {
+  if (!vectors || !vectors_coords) return -1;
+  if (vectors->count >= vectors_capacity(vectors)) return -1;
+  if (float_array_size(vectors_coords) != vectors->dims) return -1;
 
   for (size_t i = 0; i != vectors->dims; ++i) {
-    float coord = float_array_get_element(vectors_coords, i);
+    float coord;
+    float_array_get_element(vectors_coords, i, &coord);
     float_array_set_element(vectors->coords[i], vectors->count, coord);
   }
   vectors->count++;
+  return 0;
 }
 
 float_array_t *vectors_get_coords(const vectors_t *vectors, size_t dim) {
-  assert(vectors != NULL);
-  assert(dim < vectors->dims);
+  if (!vectors) return NULL;
+  if (dim >= vectors->dims) return NULL;
   return vectors->coords[dim];
 }
 
 size_t vectors_count(const vectors_t *vectors) {
-  assert(vectors != NULL);
+  if (!vectors) return 0;
   return vectors->count;
 }
 
 size_t vectors_capacity(const vectors_t *vectors) {
-  assert(vectors != NULL);
+  if (!vectors) return 0;
   return float_array_size(vectors->coords[0]);
 }
 
 size_t vectors_dims(const vectors_t *vectors) {
-  assert(vectors != NULL);
+  if (!vectors) return 0;
   return vectors->dims;
 }
 
