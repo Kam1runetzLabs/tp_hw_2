@@ -1,13 +1,11 @@
 // Copyright 2021 Kam1runetzLabs <notsoserious2017@gmail.com>
 
-#include "thread_pool.h"
-
-#include <assert.h>
 #include <pthread.h>
 #include <stdint.h>
 #include <stdlib.h>
 #include <unistd.h>
 
+#include "thread_pool.h"
 #include "queue.h"
 
 #define PTHREAD_SAFE_INIT(pool, statement) \
