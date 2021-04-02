@@ -1,6 +1,5 @@
 // Copyright 2021 Kam1runetzLabs <notsoserious2017@gmail.com>
 
-#include <assert.h>
 #include <stddef.h>
 #include <stdlib.h>
 
@@ -26,7 +25,7 @@ static void *float_range_avg(void *arg) {
 }
 
 float_array_t *calc_avg_vector(const vectors_t *vectors) {
-  assert(vectors != NULL);
+  if (!vectors) return NULL;
   thread_pool_t *pool = thread_pool_init(hardware_concurrency());
   if (!pool) return NULL;
 

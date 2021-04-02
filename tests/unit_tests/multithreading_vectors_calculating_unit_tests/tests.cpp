@@ -55,8 +55,9 @@ TEST(CalcAvgVectors, CalcAvgVectors) {
   float_array_t *avg_vector = calc_avg_vector(vectors);
   for (size_t i = 0; i != dims; ++i) {
     float_array_t *coords_range = vectors_get_coords(vectors, i);
-    EXPECT_FLOAT_EQ(calc_avg_range(coords_range),
-                    float_array_get_element(avg_vector, i));
+    float avg_vector_coord;
+    float_array_get_element(avg_vector, i, &avg_vector_coord);
+    EXPECT_FLOAT_EQ(calc_avg_range(coords_range), avg_vector_coord);
   }
   dlclose(handle);
   float_array_free(avg_vector);
