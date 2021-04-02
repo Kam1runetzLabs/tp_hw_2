@@ -1,11 +1,10 @@
 // Copyright 2021 Kam1runetzLabs <notsoserious2017@gmail.com>
 
-#include "vectors.h"
-
 #include <malloc.h>
 #include <stddef.h>
 #include <stdio.h>
 
+#include "vectors.h"
 #include "float_array.h"
 
 typedef struct vectors {
